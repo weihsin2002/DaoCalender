@@ -7,12 +7,17 @@ import org.dao.calendar.config.Configurator;
 public class SolarTermsTest {
 
 	private final Logger logger = Logger.getLogger(Configurator.class);
-	private final SolarTerms solarTerms = new SolarTerms();
-
+	
 	public static void main(String[] args) {
+//		SolarTermsTest solarTermsTest = new SolarTermsTest();
+//		solarTermsTest.JQtest(2018);
+		
+		SolarTerms solarTerms = new SolarTerms();
+		solarTerms.paiYue(2018);
 	}
 	
-	 public void JQtest(int y) { // 节气使计算范例,y是年分,这是个测试函数  
+	public void JQtest(int y) { // 节气使计算范例,y是年分,这是个测试函数
+		SolarTerms solarTerms = new SolarTerms();
 		  double jd = 365.2422 * (y - 2000), q;  
 		  String s1, s2;  
 		  for (int i = 0; i < 24; i++) {  

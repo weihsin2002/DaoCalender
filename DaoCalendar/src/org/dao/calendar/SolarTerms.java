@@ -622,10 +622,10 @@ public class SolarTerms {
 	  return t;  
 	 }  
 	   
-	 //==================节气计算===================  
-	 public final String jqB[] = { //节气表  
-	   "春分","清明","谷雨","立夏","小满","芒种","夏至","小暑","大暑","立秋","处暑","白露",  
-	   "秋分","寒露","霜降","立冬","小雪","大雪","冬至","小寒","大寒","立春","雨水","惊蛰"};  
+//	 //==================节气计算===================  
+//	 public final String jqB[] = { //节气表  
+//	   "春分","清明","谷雨","立夏","小满","芒种","夏至","小暑","大暑","立秋","处暑","白露",  
+//	   "秋分","寒露","霜降","立冬","小雪","大雪","冬至","小寒","大寒","立春","雨水","惊蛰"};  
 	  	  
 	 // =================定朔弦望计算========================  
 	 public void dingSuo(int y, double arc) { // 这是个测试函数  
@@ -658,10 +658,10 @@ public class SolarTerms {
 	  * 定出闰月后,该月及以后的月编号减1 5.以上所述的月编号不是日常生活中说的"正月","二月"等月名称: 
 	  * 如果"建子",0月为首月,如果"建寅",2月的月名"正月",3月是"二月",其余类推 
 	  *****/  
-	 private final String yueMing[] = { "正", "二", "三", "四", "五", "六",  
-	   "七", "八", "九", "十", "十一", "十二" };  
+//	 private final String yueMing[] = { "正", "二", "三", "四", "五", "六",  
+//	   "七", "八", "九", "十", "十一", "十二" };  
 	  
-	 private void paiYue(int y) { // 农历排月序计算,可定出农历
+	 public void paiYue(int y) { // 农历排月序计算,可定出农历
 		 
 	  double zq[] = new double[20];  
 	  double jq[] = new double[20];  
@@ -705,15 +705,15 @@ public class SolarTerms {
 	  }  
 	  String syn[] = new String[20];  
 	  for (i = 0; i < tot; i++) { // 转为建寅月名,并做大小月分析  
-	   syn[i] = yueMing[(yn[i] + 10) % 12]; // 转建寅月名  
+	   syn[i] = Configurator.lunarMonth()[(yn[i] + 10) % 12]; // 转建寅月名  
 	   if (i == nun)  
-	    syn[i] += "闰";  
-	   else  
-	    syn[i] += "月"; // 标记是否闰月  
-	   if (C[i + 1] - C[i] > 29)  
-	    syn[i] += "大";  
-	   else  
-	    syn[i] += "小"; // 标记大小月  
+	    syn[i] += "leap";  
+//	   else  
+//	    syn[i] += "月"; // 标记是否闰月  
+//	   if (C[i + 1] - C[i] > 29)  
+//	    syn[i] += "大";  
+//	   else  
+//	    syn[i] += "小"; // 标记大小月  
 	  }  
 	  // 显示  
 	  String out = "节气    手表时		   中气    手表时            	        农历月   朔的手表时" + System.lineSeparator();  
@@ -721,10 +721,10 @@ public class SolarTerms {
 	   int zm = (i * 2 + 18) % 24;  
 	   int jm = (i * 2 + 17) % 24; // 中气名节气名  
 	   setFromJD(jq[i] + J2000 + (double)8 / 24, true);  
-	   out += jqB[jm] + ":" + toStr() + " "; // 显示节气  
+	   out += Configurator.jieQi()[jm] + ":" + toStr() + " "; // 显示节气  
 	   yearlyTerms.add(new SolarTerm(toDate(), Configurator.jieQi()[jm])); 
 	   setFromJD(zq[i] + J2000 + (double)8 / 24, true);  
-	   out += jqB[zm] + ":" + toStr() + " "; // 显示中气
+	   out += Configurator.jieQi()[zm] + ":" + toStr() + " "; // 显示中气
 	   yearlyTerms.add(new SolarTerm(toDate(), Configurator.jieQi()[zm]));
 	   setFromJD(hs[i] + J2000 + (double)8 / 24, true);  
 	   out += syn[i] + ":" + toStr() + System.lineSeparator(); // 显示日月合朔  

@@ -77,6 +77,8 @@ public class Configurator {
 	
 	private static String[] tianGan = {"Jia","Yi","Bing","Ding","Wu","Ji","Gen","Xin","Ren","Gui"};
 	private static String[] diZhi = {"Zi","Chou","Yin","Mao","Chen","Si","Wu","Wei","Shen","You","Xu","Hai"};
+	
+	private static String lunarMonth[] = { "First Lunar Month", "Second Lunar Month", "Third Lunar Month", "Fourth Lunar Month", "Fifth Lunar Month", "Sixth Lunar Month", "Seventh Lunar Month", "Eighth Lunar Month", "Ninth Lunar Month", "Tenth Lunar Month", "Eleventh Lunar Month", "Twelfth Lunar Month" };  
 
 	static {
 		initialize();
@@ -107,4 +109,8 @@ public class Configurator {
 	public static int[] solar_1_1() {
 		return solar_1_1;
 	}
+
+	public static String[] lunarMonth() {
+		return lunarMonth;
+	}	
 }
