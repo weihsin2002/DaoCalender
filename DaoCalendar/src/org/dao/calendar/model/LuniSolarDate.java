@@ -1,9 +1,9 @@
-package org.dao.calendar;
+package org.dao.calendar.model;
 
 import org.dao.Utils;
 import org.dao.calendar.config.Configurator;
 
-public class LuniSolarCalendar {
+public class LuniSolarDate {
 	private boolean isleap;
 	private int day;
 	private int month;
@@ -11,7 +11,7 @@ public class LuniSolarCalendar {
 	private int days;
 	private int leap; // leap month	
 	
-	public LuniSolarCalendar (int year, int month, int day, boolean isleap) { // initializing lunar object by entering lunar date 
+	public LuniSolarDate (int year, int month, int day, boolean isleap) { // initializing lunar object by entering lunar date 
 		this.year = year;
 		this.month = month;
 		this.day = day;

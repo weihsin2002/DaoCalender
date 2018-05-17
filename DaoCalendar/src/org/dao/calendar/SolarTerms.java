@@ -1,17 +1,25 @@
 package org.dao.calendar;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
-import org.dao.calendar.model.Term;
+import org.apache.log4j.Logger;
+import org.dao.calendar.config.Configurator;
+import org.dao.calendar.model.LuniSolarDate;
+import org.dao.calendar.model.SolarDate;
+import org.dao.calendar.model.SolarTerm;
 
 public class SolarTerms {
-	  ArrayList <Term> yearlyTerms = new ArrayList<Term>();
-	  private String currentTerm;
-	  private String nextTerm;
-	  int termYear;
-	  int termMonth;
-	  int termDay;
+	private static final Logger logger = Logger.getLogger(Configurator.class);
+
+	ArrayList <SolarTerm> yearlyTerms = new ArrayList<SolarTerm>();
+	private String currentTerm;
+	private String nextTerm;
+	int termYear;
+	int termMonth;
+	int termDay;
 
 	 // ========角度变换===============  
 	 private static final double rad = 180 * 3600 / Math.PI; // 每弧度的角秒数  
@@ -182,7 +190,39 @@ public class SolarTerms {
 	  ss = ss.substring(ss.length() - 2, ss.length());  
 	  return Y + "-" + M + "-" + D + " " + sh + ":" + sm + ":" + ss;  
 	 }  
-	  
+
+	 public Date toDate() {  
+		  String Y = "     " + (int)this.Y;  
+		  String M = "0" + (int)this.M;  
+		  String D = "0" + (int)this.D;  
+		  
+		  double h = this.h, m = this.m, s = Math.floor(this.s + .5);  
+		  if (s >= 60) {  
+		   s -= 60;  
+		   m++;  
+		  }  
+		  if (m >= 60) {  
+		   m -= 60;  
+		   h++;  
+		  }  
+		  String sh = "0" + (int)h, sm = "0" + (int)m, ss = "0" + (int)s;  
+		  Y = Y.substring(Y.length() - 5, Y.length());  
+		  M = M.substring(M.length() - 2, M.length());  
+		  D = D.substring(D.length() - 2, D.length());  
+		  sh = sh.substring(sh.length() - 2, sh.length());  
+		  sm = sm.substring(sm.length() - 2, sm.length());  
+		  ss = ss.substring(ss.length() - 2, ss.length());
+		  SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		  
+		  try {
+			return dateFormat.parse(Y + "-" + M + "-" + D + " " + sh + ":" + sm + ":" + ss);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			logger.error("Error parsing date string", e);
+			return null;
+		}  
+		 }  
+
 	 // 算出:jd转到当地UTC后,UTC日数的整数部分或小数部分  
 	 // 基于J2000力学时jd的起算点是12:00:00时,所以跳日时刻发生在12:00:00,这与日历计算发生矛盾  
 	 // 把jd改正为00:00:00起算,这样儒略日的跳日动作就与日期的跳日同步  
@@ -596,7 +636,7 @@ public class SolarTerms {
 	   s1 = toStr(); // 将儒略日转成世界时  
 	   setFromJD(q, false);  
 	   s2 = toStr(); // 将儒略日转成日期格式(输出日期形式的力学时)  
-	   System.out.println(jqB[i] + " : " + s1 + " " + s2); // 显示  
+	   logger.info(jqB[i] + " : " + s1 + " " + s2); // 显示  
 	  }    
 	 }  
 	  
@@ -604,14 +644,14 @@ public class SolarTerms {
 	 public void dingSuo(int y, double arc) { // 这是个测试函数  
 	  double jd = 365.2422 * (y - 2000), q;  
 	  String s1, s2;  
-	  System.out.println("月份:世界时  原子时");  
+	  logger.info("月份:世界时  原子时");  
 	  for (int i = 0; i < 12; i++) {  
 	   q = jiaoCal(jd + 29.5 * i, arc, 1) + J2000 + 8 / 24; // 计算第i个节气(i=0是春风),结果转为北京时  
 	   setFromJD(q, true);  
 	   s1 = toStr(); // 将儒略日转成世界时  
 	   setFromJD(q, false);  
 	   s2 = toStr(); // 将儒略日转成日期格式(输出日期形式的力学时)  
-	   System.out.println((i + 1) + "月 : " + s1 + " " + s2); // 显示  
+	   logger.info((i + 1) + "月 : " + s1 + " " + s2); // 显示  
 	  }  
 	 }  
 	   
@@ -695,63 +735,63 @@ public class SolarTerms {
 	   int jm = (i * 2 + 17) % 24; // 中气名节气名  
 	   setFromJD(jq[i] + J2000 + (double)8 / 24, true);  
 	   out += jqB[jm] + ":" + toStr() + " "; // 显示节气  
-	   yearlyTerms.add(new Term(toStr(), jqB[jm])); 
+	   yearlyTerms.add(new SolarTerm(toDate(), Configurator.JieQi[jm])); 
 	   setFromJD(zq[i] + J2000 + (double)8 / 24, true);  
 	   out += jqB[zm] + ":" + toStr() + " "; // 显示中气
-	   yearlyTerms.add(new Term(toStr(), jqB[zm]));
+	   yearlyTerms.add(new SolarTerm(toDate(), Configurator.JieQi[zm]));
 	   setFromJD(hs[i] + J2000 + (double)8 / 24, true);  
 	   out += syn[i] + ":" + toStr() + System.lineSeparator(); // 显示日月合朔  
 	  }  
-	  //System.out.println(out);  
+	  logger.info(out);  
 	 } 
 
-	 public SolarTerm (Solar solar, int hour, int min) {
+	 public void SolarTerm (SolarDate solar, int hour, int min) {
 		 paiYue(solar.solarYear());
 		 paiYue(solar.solarYear()+1);
 
-		 Solar solarHM = new Solar(solar.solarYear(), solar.solarMonth(), solar.solarDay(), hour, min);
+		 SolarDate solarHM = new SolarDate(solar.solarYear(), solar.solarMonth(), solar.solarDay(), hour, min);
 		 
 		 for (int i = 0; i < yearlyTerms.size() ; i++) {
-			 if (((Term) yearlyTerms.get(i)).time() == null) {
+			 if (((SolarTerm) yearlyTerms.get(i)).time() == null) {
 			 continue;
 			 }
 			  
-		 if (((Term) yearlyTerms.get(i)).time().after(solarHM.solarDate())) {
-				 this.currentTerm = ((Term) yearlyTerms.get(i-1)).qi();
-				 this.nextTerm = ((Term) yearlyTerms.get(i)).qi();
-				 this.termYear = Integer.parseInt(new SimpleDateFormat("yyyy").format(((Term) yearlyTerms.get(i-1)).time()));
-				 this.termMonth = Integer.parseInt(new SimpleDateFormat("mm").format(((Term) yearlyTerms.get(i-1)).time()));
-				 this.termDay = Integer.parseInt(new SimpleDateFormat("dd").format(((Term) yearlyTerms.get(i-1)).time()));
+		 if (((SolarTerm) yearlyTerms.get(i)).time().after(solarHM.date())) {
+				 this.currentTerm = ((SolarTerm) yearlyTerms.get(i-1)).qi();
+				 this.nextTerm = ((SolarTerm) yearlyTerms.get(i)).qi();
+				 this.termYear = Integer.parseInt(new SimpleDateFormat("yyyy").format(((SolarTerm) yearlyTerms.get(i-1)).time()));
+				 this.termMonth = Integer.parseInt(new SimpleDateFormat("mm").format(((SolarTerm) yearlyTerms.get(i-1)).time()));
+				 this.termDay = Integer.parseInt(new SimpleDateFormat("dd").format(((SolarTerm) yearlyTerms.get(i-1)).time()));
 				 break;
 			 }
 		 }
 	 }
 	 
-	 public SolarTerm (Lunar lunar, int hour, int min) {
+	 public void SolarTerm (LuniSolarDate lunar, int hour, int min) {
 		 CalendarConversion calendarConversion = new CalendarConversion();
-		 Solar solar = calendarConversion.LunarToSolar(lunar);
+		 SolarDate solar = calendarConversion.LunarToSolar(lunar);
 		 
-		 System.out.println("solar year = " + solar.solarYear());
+		 logger.info("solar year = " + solar.solarYear());
 		 
 		 paiYue(solar.solarYear());
 		 paiYue(solar.solarYear()+1);
 		 
-		 Solar solarHM = new Solar(solar.solarYear(), solar.solarMonth(), solar.solarDay(), hour, min);
+		 SolarDate solarHM = new SolarDate(solar.solarYear(), solar.solarMonth(), solar.solarDay(), hour, min);
 		 
 		 for (int i = 0; i < yearlyTerms.size() ; i++) {
-			 System.out.println("yearlyTerms time = " + yearlyTerms.get(i).time() + " yearlyTerms qi = " + yearlyTerms.get(i).qi());
-			 if (((Term) yearlyTerms.get(i)).time() == null) {
+			 logger.info("yearlyTerms time = " + yearlyTerms.get(i).time() + " yearlyTerms qi = " + yearlyTerms.get(i).qi());
+			 if (((SolarTerm) yearlyTerms.get(i)).time() == null) {
 			 continue;
 			 }
 			  
-		 if (((Term) yearlyTerms.get(i)).time().after(solarHM.solarDate())) {
-				 this.currentTerm = ((Term) yearlyTerms.get(i-1)).qi();
-				 this.nextTerm = ((Term) yearlyTerms.get(i)).qi();
-				 this.termYear = Integer.parseInt(new SimpleDateFormat("yyyy").format(((Term) yearlyTerms.get(i-1)).time()));
-				 this.termMonth = Integer.parseInt(new SimpleDateFormat("MM").format(((Term) yearlyTerms.get(i-1)).time()));
+		 if (((SolarTerm) yearlyTerms.get(i)).time().after(solarHM.date())) {
+				 this.currentTerm = ((SolarTerm) yearlyTerms.get(i-1)).qi();
+				 this.nextTerm = ((SolarTerm) yearlyTerms.get(i)).qi();
+				 this.termYear = Integer.parseInt(new SimpleDateFormat("yyyy").format(((SolarTerm) yearlyTerms.get(i-1)).time()));
+				 this.termMonth = Integer.parseInt(new SimpleDateFormat("MM").format(((SolarTerm) yearlyTerms.get(i-1)).time()));
 				 
-				 System.out.println("this.termYear = " + this.termYear);
-				 System.out.println("this.termMonth = " + this.termMonth);
+				 logger.info("this.termYear = " + this.termYear);
+				 logger.info("this.termMonth = " + this.termMonth);
 				 break;
 			 }
 		 }
