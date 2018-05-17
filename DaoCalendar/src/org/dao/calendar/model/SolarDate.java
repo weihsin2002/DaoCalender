@@ -4,6 +4,9 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import org.dao.calendar.config.Configurator;
+import org.dao.calendar.utils.Utils;
+
 public class SolarDate {
 	private int solarDay;
 	private int solarMonth;
@@ -84,5 +87,30 @@ public class SolarDate {
 
 	public void setSolarDate(Date date) {
 		this.date = date;
+	}
+		
+	public SolarDate LunarToSolar(LuniSolarDate lunar) {
+		int offset = 0;
+		int loopend = lunar.leap();
+		if (!lunar.isleap()) {
+			if (lunar.month() <= lunar.leap() || lunar.leap() == 0) {
+				loopend = lunar.month() - 1;
+			} else {
+				loopend = lunar.month();
+			}
+		}
+
+		for (int i = 0; i < loopend; i++) {
+			offset += Utils.GetBitInt(lunar.days(), 1, 12 - i) == 1 ? 30 : 29;
+		}
+		offset += lunar.day();
+
+		int solar11 = Configurator.solar_1_1()[lunar.year() - Configurator.solar_1_1()[0]];
+
+		int y = Utils.GetBitInt(solar11, 12, 9);
+		int m = Utils.GetBitInt(solar11, 4, 5);
+		int d = Utils.GetBitInt(solar11, 5, 0);
+
+		return Utils.SolarFromInt(Utils.SolarToInt(y, m, d) + offset - 1);
 	}
 }

@@ -1,2 +1,4 @@
 eclipse.preferences.version=1
 encoding//src/org/dao/calendar/SolarTerms.java=UTF-8
+encoding//src/org/dao/calendar/config/Configurator.java=UTF-8
+encoding//test/org/dao/calendar/test/SolarTermsTest.java=UTF-8

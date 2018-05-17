@@ -91,4 +91,20 @@ public class Configurator {
 	public static int[] lunar_month_days() {
 		return lunar_month_days;
 	}
+
+	public static String[] jieQi() {
+		return JieQi;
+	}
+
+	public static String[] tianGan() {
+		return tianGan;
+	}
+
+	public static String[] diZhi() {
+		return diZhi;
+	}
+
+	public static int[] solar_1_1() {
+		return solar_1_1;
+	}
 }
