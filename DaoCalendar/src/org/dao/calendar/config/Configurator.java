@@ -75,7 +75,7 @@ public class Configurator {
 			   "Spring Equinox","Pure Brightness","Grain Rain","Start of Summer","Grain Full","Grain in Ear","Summer Solstice","Slight Heat","Great Heat","Start of Autumn","The End of Heat","White Dew",  
 			   "Autumn Equinox","Cold Dew","Frost Descent","Start of Winter","Light Snow","Heavy Snow","Winter Solstice","Lesser Cold","Greater Cold","Start of Spring","Rain Water","Insects Awaken"};  
 	
-	private static String[] tianGan = {"Jia","Yi","Bing","Ding","Wu","Ji","Gen","Xin","Ren","Gui"};
+	private static String[] tianGan = {"Jia","Yi","Bing","Ding","Wu","Ji","Geng","Xin","Ren","Gui"};
 	private static String[] diZhi = {"Zi","Chou","Yin","Mao","Chen","Si","Wu","Wei","Shen","You","Xu","Hai"};
 	
 	private static String lunarMonth[] = { "First Lunar Month", "Second Lunar Month", "Third Lunar Month", "Fourth Lunar Month", "Fifth Lunar Month", "Sixth Lunar Month", "Seventh Lunar Month", "Eighth Lunar Month", "Ninth Lunar Month", "Tenth Lunar Month", "Eleventh Lunar Month", "Twelfth Lunar Month" };  
