@@ -1,13 +1,15 @@
 package org.dao.calendar.model;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import org.apache.log4j.Logger;
 import org.dao.calendar.config.Configurator;
 import org.dao.calendar.utils.Utils;
 
 public class SolarDate {
+	private Logger logger = Logger.getLogger(SolarDate.class);
+	
 	private int solarDay;
 	private int solarMonth;
 	private int solarYear;
@@ -23,6 +25,10 @@ public class SolarDate {
 		this.solarDay = d;
 	}
 	
+	public SolarDate (Date date) {
+		this.date = date;
+	}
+	
 	public SolarDate (int y, int m, int d, int h, int min) {
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 		this.hour = h;
@@ -32,9 +38,8 @@ public class SolarDate {
 		try {
 			Date date = dateFormat.parse(y + "-" + m + "-" + d + " " + h + ":" + m);
 			this.date = date;
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		} catch (Exception e) {
+			logger.error("Errer parsing SolarDate");
 		}
 	}
 	

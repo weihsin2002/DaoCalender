@@ -6,7 +6,7 @@ import org.dao.calendar.config.Configurator;
 
 public class SolarTermsTest {
 
-	private final Logger logger = Logger.getLogger(Configurator.class);
+	private final Logger logger = Logger.getLogger(SolarTermsTest.class);
 	
 	public static void main(String[] args) {
 //		SolarTermsTest solarTermsTest = new SolarTermsTest();
