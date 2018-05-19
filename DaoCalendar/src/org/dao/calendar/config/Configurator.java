@@ -78,7 +78,21 @@ public class Configurator {
 	private static String[] tianGan = {"Jia","Yi","Bing","Ding","Wu","Ji","Geng","Xin","Ren","Gui"};
 	private static String[] diZhi = {"Zi","Chou","Yin","Mao","Chen","Si","Wu","Wei","Shen","You","Xu","Hai"};
 	
-	private static String lunarMonth[] = { "First Lunar Month", "Second Lunar Month", "Third Lunar Month", "Fourth Lunar Month", "Fifth Lunar Month", "Sixth Lunar Month", "Seventh Lunar Month", "Eighth Lunar Month", "Ninth Lunar Month", "Tenth Lunar Month", "Eleventh Lunar Month", "Twelfth Lunar Month" };  
+	private static String lunarMonth[] = { "First Lunar Month", "Second Lunar Month", "Third Lunar Month", "Fourth Lunar Month", "Fifth Lunar Month", "Sixth Lunar Month", "Seventh Lunar Month", "Eighth Lunar Month", "Ninth Lunar Month", "Tenth Lunar Month", "Eleventh Lunar Month", "Twelfth Lunar Month" };
+	
+	private static int[] yueByNian = {0,3,5,7,9,1,3,5,7,9,1};
+	private static int[] shiByRi =   {0,1,3,5,7,9,1,3,5,7,9};
+
+	
+	//为h*100+m。子时序号为1，最大为59分，丑时序号为2，最大259分
+	private static int[] HOURNUM = {0,60,300,500,700,900,1100,1300,1500,1700,1900,2100,2300};
+	//由时辰反推12时辰，如0点为序号1即子时，1点为序号2即丑时
+	private static int[] RHOURNUM = {1,2,2,3,3,4,4,5,5,6,6,7,7,8,8,9,9,10,10,11,11,12,12,0};
+	//干支阴阳
+	private static int[] GANYINYANG = {0,1,0,1,0,1,0,1,0,1,0};
+	private static int[] ZIYINYANG =  {0,1,0,1,0,1,0,1,0,1,0,1,0};
+	  
+	  
 
 	static {
 		initialize();
@@ -112,5 +126,17 @@ public class Configurator {
 
 	public static String[] lunarMonth() {
 		return lunarMonth;
+	}
+
+	public static int[] yuebynian() {
+		return yueByNian;
+	}
+
+	public static int[] shibyri() {
+		return shiByRi;
+	}
+
+	public static int[] hourNum() {
+		return HOURNUM;
 	}	
 }
