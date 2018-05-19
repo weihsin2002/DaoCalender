@@ -1,6 +1,7 @@
 package org.dao.calendar.model;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 import org.apache.log4j.Logger;
@@ -10,9 +11,9 @@ import org.dao.calendar.utils.Utils;
 public class SolarDate {
 	private Logger logger = Logger.getLogger(SolarDate.class);
 	
-	private int solarDay;
-	private int solarMonth;
-	private int solarYear;
+	private int day;
+	private int month;
+	private int year;
 	private int hour;
 	private int min;
 	private int sec;
@@ -20,17 +21,33 @@ public class SolarDate {
 	private Date date;
 	
 	public SolarDate (int y, int m, int d) {
-		this.solarYear = y;
-		this.solarMonth = m;
-		this.solarDay = d;
+		this.year = y;
+		this.month = m;
+		this.day = d;
+		this.hour = 0;
+		this.min = 0;
+		this.sec = 0;
 	}
 	
 	public SolarDate (Date date) {
 		this.date = date;
+		
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
+		
+		this.year = cal.get(Calendar.YEAR);
+		this.month = cal.get(Calendar.MONDAY) + 1;
+		this.day = cal.get(Calendar.DAY_OF_MONTH);
+		this.hour = cal.get(Calendar.HOUR_OF_DAY);
+		this.min = cal.get(Calendar.MINUTE);
+		this.sec = cal.get(Calendar.SECOND);
 	}
 	
 	public SolarDate (int y, int m, int d, int h, int min) {
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+		this.year = y;
+		this.month = m;
+		this.day = d;
 		this.hour = h;
 		this.min = min;
 		this.sec = 0;
@@ -43,57 +60,34 @@ public class SolarDate {
 		}
 	}
 	
-	public int solarDay() {
-		return solarDay;
-	}
-	public void setSolarDay(int solarDay) {
-		this.solarDay = solarDay;
-	}
-	public int solarMonth() {
-		return solarMonth;
-	}
-	public void setSolarMonth(int solarMonth) {
-		this.solarMonth = solarMonth;
-	}
-	public int solarYear() {
-		return solarYear;
-	}
-	public void setSolarYear(int solarYear) {
-		this.solarYear = solarYear;
+	public int day() {
+		return day;
 	}
 
+	public int month() {
+		return month;
+	}
+
+	public int year() {
+		return year;
+	}
+	
 	public int hour() {
 		return hour;
-	}
-
-	public void setHour(int hour) {
-		this.hour = hour;
 	}
 
 	public int min() {
 		return min;
 	}
 
-	public void setMin(int min) {
-		this.min = min;
-	}
-
 	public int sec() {
 		return sec;
-	}
-
-	public void setSec(int sec) {
-		this.sec = sec;
 	}
 
 	public Date date() {
 		return date;
 	}
 
-	public void setSolarDate(Date date) {
-		this.date = date;
-	}
-		
 	public SolarDate LunarToSolar(LuniSolarDate lunar) {
 		int offset = 0;
 		int loopend = lunar.leap();

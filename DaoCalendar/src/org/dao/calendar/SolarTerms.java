@@ -733,10 +733,10 @@ public class SolarTerms {
 	 } 
 
 	 public void SolarTerm (SolarDate solar, int hour, int min) {
-		 paiYue(solar.solarYear());
-		 paiYue(solar.solarYear()+1);
+		 paiYue(solar.year());
+		 paiYue(solar.year()+1);
 
-		 SolarDate solarHM = new SolarDate(solar.solarYear(), solar.solarMonth(), solar.solarDay(), hour, min);
+		 SolarDate solarHM = new SolarDate(solar.year(), solar.month(), solar.day(), hour, min);
 		 
 		 for (int i = 0; i < yearlyTerms.size() ; i++) {
 			 if (((SolarTerm) yearlyTerms.get(i)).time() == null) {
@@ -757,12 +757,12 @@ public class SolarTerms {
 	 public void SolarTerm (LuniSolarDate lunar, int hour, int min) {
 		 SolarDate solar = Utils.LunarToSolar(lunar);
 		 
-		 logger.info("solar year = " + solar.solarYear());
+		 logger.info("solar year = " + solar.year());
 		 
-		 paiYue(solar.solarYear());
-		 paiYue(solar.solarYear()+1);
+		 paiYue(solar.year());
+		 paiYue(solar.year()+1);
 		 
-		 SolarDate solarHM = new SolarDate(solar.solarYear(), solar.solarMonth(), solar.solarDay(), hour, min);
+		 SolarDate solarHM = new SolarDate(solar.year(), solar.month(), solar.day(), hour, min);
 		 
 		 for (int i = 0; i < yearlyTerms.size() ; i++) {
 			 logger.info("yearlyTerms time = " + yearlyTerms.get(i).time() + " yearlyTerms qi = " + yearlyTerms.get(i).qi());
