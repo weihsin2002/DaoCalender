@@ -4,6 +4,8 @@ import org.apache.log4j.Logger;
 import org.dao.calendar.config.Configurator;
 import org.dao.calendar.utils.Utils;
 
+import com.google.gson.JsonObject;
+
 public class LuniSolarDate {
 	private static final Logger logger = Logger.getLogger(LuniSolarDate.class);
 
@@ -207,5 +209,24 @@ public class LuniSolarDate {
 	
 	public FourPillars fourPillars () {
 		return fourPillars;
+	}
+	
+	public String toString () {
+		return "Year=" + this.year + ",Month=" + this.month + ",Day=" + this.day + ",Hour=" + this.hour + ",Minute="+this.minute + ",Second="+this.sec + ",isLeap=" + this.isleap + ",days=" + this.days + ",Four Pillars=" + fourPillars.toString();
+	}
+	
+	public JsonObject toJson () {
+		JsonObject json = new JsonObject();
+		json.addProperty("year", this.year);
+		json.addProperty("month", this.month);
+		json.addProperty("day", this.day);
+		json.addProperty("hour", this.hour);
+		json.addProperty("minute", this.minute);
+		json.addProperty("second", this.sec);
+		json.addProperty("isLeap", this.isleap);
+		json.addProperty("days", this.days);
+		json.add("FourPillars", this.fourPillars.toJson());
+		
+		return json;
 	}
 }

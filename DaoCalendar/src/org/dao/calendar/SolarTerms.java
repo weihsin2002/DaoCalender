@@ -1,5 +1,6 @@
 package org.dao.calendar;
 
+import org.dao.calendar.model.Term;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -17,6 +18,10 @@ public class SolarTerms {
 
 	ArrayList <SolarTerm> yearlyTerms = new ArrayList<SolarTerm>();
 	private String currentTerm;
+	int thisYear;
+	int thisMonth;
+	int thisDay;
+
 	private String nextTerm;
 	int termYear;
 	int termMonth;
@@ -732,11 +737,11 @@ public class SolarTerms {
 	  logger.info(out);  
 	 } 
 
-	 public void SolarTerm (SolarDate solar, int hour, int min) {
+	 public Term Term (SolarDate solar) {
 		 paiYue(solar.year());
 		 paiYue(solar.year()+1);
 
-		 SolarDate solarHM = new SolarDate(solar.year(), solar.month(), solar.day(), hour, min);
+		 SolarDate solarHM = new SolarDate(solar.year(), solar.month(), solar.day(), solar.hour(), solar.min());
 		 
 		 for (int i = 0; i < yearlyTerms.size() ; i++) {
 			 if (((SolarTerm) yearlyTerms.get(i)).time() == null) {
@@ -744,17 +749,29 @@ public class SolarTerms {
 			 }
 			  
 		 if (((SolarTerm) yearlyTerms.get(i)).time().after(solarHM.date())) {
-				 this.currentTerm = ((SolarTerm) yearlyTerms.get(i-1)).qi();
-				 this.nextTerm = ((SolarTerm) yearlyTerms.get(i)).qi();
-				 this.termYear = Integer.parseInt(new SimpleDateFormat("yyyy").format(((SolarTerm) yearlyTerms.get(i-1)).time()));
-				 this.termMonth = Integer.parseInt(new SimpleDateFormat("mm").format(((SolarTerm) yearlyTerms.get(i-1)).time()));
-				 this.termDay = Integer.parseInt(new SimpleDateFormat("dd").format(((SolarTerm) yearlyTerms.get(i-1)).time()));
+			 this.currentTerm = ((SolarTerm) yearlyTerms.get(i-1)).qi();
+			 this.thisYear = Integer.parseInt(new SimpleDateFormat("yyyy").format(((SolarTerm) yearlyTerms.get(i-2)).time()));
+			 this.thisMonth = Integer.parseInt(new SimpleDateFormat("MM").format(((SolarTerm) yearlyTerms.get(i-2)).time()));
+			 this.thisDay = Integer.parseInt(new SimpleDateFormat("dd").format(((SolarTerm) yearlyTerms.get(i-2)).time()));
+			 
+			 this.nextTerm = ((SolarTerm) yearlyTerms.get(i)).qi();
+			 this.termYear = Integer.parseInt(new SimpleDateFormat("yyyy").format(((SolarTerm) yearlyTerms.get(i-1)).time()));
+			 this.termMonth = Integer.parseInt(new SimpleDateFormat("MM").format(((SolarTerm) yearlyTerms.get(i-1)).time()));
+			 this.termDay = Integer.parseInt(new SimpleDateFormat("dd").format(((SolarTerm) yearlyTerms.get(i-1)).time()));
+
+//				 this.currentTerm = ((SolarTerm) yearlyTerms.get(i-1)).qi();
+//				 this.nextTerm = ((SolarTerm) yearlyTerms.get(i)).qi();
+//				 this.termYear = Integer.parseInt(new SimpleDateFormat("yyyy").format(((SolarTerm) yearlyTerms.get(i-1)).time()));
+//				 this.termMonth = Integer.parseInt(new SimpleDateFormat("mm").format(((SolarTerm) yearlyTerms.get(i-1)).time()));
+//				 this.termDay = Integer.parseInt(new SimpleDateFormat("dd").format(((SolarTerm) yearlyTerms.get(i-1)).time()));
 				 break;
 			 }
 		 }
+		 
+		 return new Term(this.currentTerm, this.thisYear, this.thisMonth, this.thisDay, this.nextTerm, this.termYear, this.termMonth, this.termDay);
 	 }
 	 
-	 public void SolarTerm (LuniSolarDate lunar, int hour, int min) {
+	 public Term Term (LuniSolarDate lunar) {
 		 SolarDate solar = Utils.LunarToSolar(lunar);
 		 
 		 logger.info("solar year = " + solar.year());
@@ -762,7 +779,7 @@ public class SolarTerms {
 		 paiYue(solar.year());
 		 paiYue(solar.year()+1);
 		 
-		 SolarDate solarHM = new SolarDate(solar.year(), solar.month(), solar.day(), hour, min);
+		 SolarDate solarHM = new SolarDate(solar.year(), solar.month(), solar.day(), solar.hour(), solar.min());
 		 
 		 for (int i = 0; i < yearlyTerms.size() ; i++) {
 			 logger.info("yearlyTerms time = " + yearlyTerms.get(i).time() + " yearlyTerms qi = " + yearlyTerms.get(i).qi());
@@ -772,15 +789,22 @@ public class SolarTerms {
 			  
 		 if (((SolarTerm) yearlyTerms.get(i)).time().after(solarHM.date())) {
 				 this.currentTerm = ((SolarTerm) yearlyTerms.get(i-1)).qi();
+				 this.thisYear = Integer.parseInt(new SimpleDateFormat("yyyy").format(((SolarTerm) yearlyTerms.get(i-2)).time()));
+				 this.thisMonth = Integer.parseInt(new SimpleDateFormat("MM").format(((SolarTerm) yearlyTerms.get(i-2)).time()));
+				 this.thisDay = Integer.parseInt(new SimpleDateFormat("dd").format(((SolarTerm) yearlyTerms.get(i-2)).time()));
+				 
 				 this.nextTerm = ((SolarTerm) yearlyTerms.get(i)).qi();
 				 this.termYear = Integer.parseInt(new SimpleDateFormat("yyyy").format(((SolarTerm) yearlyTerms.get(i-1)).time()));
 				 this.termMonth = Integer.parseInt(new SimpleDateFormat("MM").format(((SolarTerm) yearlyTerms.get(i-1)).time()));
+				 this.termDay = Integer.parseInt(new SimpleDateFormat("dd").format(((SolarTerm) yearlyTerms.get(i-1)).time()));
 				 
 				 logger.info("this.termYear = " + this.termYear);
 				 logger.info("this.termMonth = " + this.termMonth);
 				 break;
 			 }
 		 }
+		 
+		 return new Term(this.currentTerm, this.thisYear, this.thisMonth, this.thisDay, this.nextTerm, this.termYear, this.termMonth, this.termDay);
 	 }
 
 	public String cCurrentTerm() {

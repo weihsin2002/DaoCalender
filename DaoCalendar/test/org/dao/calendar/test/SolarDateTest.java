@@ -13,10 +13,13 @@ public class SolarDateTest {
 		Date date = new Date();
 		SolarDate solarDate = new SolarDate(date);
 		
-		logger.info("year=" + solarDate.year() + " month= " + solarDate.month() + " day = " + solarDate.day());
+		logger.info(solarDate.toString());
+		logger.info(solarDate.toJson());
 		
 		LuniSolarDate luniSolarDate = new LuniSolarDate();
-		luniSolarDate.SolarToLunar(solarDate);
+		luniSolarDate = luniSolarDate.SolarToLunar(solarDate);
+		
+		logger.info(luniSolarDate.toJson().toString());
 	}
 
 }

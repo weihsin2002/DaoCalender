@@ -1,19 +1,27 @@
 package org.dao.calendar.test;
 
+import java.util.Date;
+
 import org.apache.log4j.Logger;
 import org.dao.calendar.SolarTerms;
 import org.dao.calendar.config.Configurator;
+import org.dao.calendar.model.SolarDate;
+import org.dao.calendar.model.Term;
 
 public class SolarTermsTest {
 
-	private final Logger logger = Logger.getLogger(SolarTermsTest.class);
+	private static final Logger logger = Logger.getLogger(SolarTermsTest.class);
 	
 	public static void main(String[] args) {
-//		SolarTermsTest solarTermsTest = new SolarTermsTest();
-//		solarTermsTest.JQtest(2018);
+		SolarTermsTest solarTermsTest = new SolarTermsTest();
+		solarTermsTest.JQtest(2018);
 		
 		SolarTerms solarTerms = new SolarTerms();
-		solarTerms.paiYue(2018);
+		SolarDate solarDate = new SolarDate(new Date());
+		Term term = solarTerms.Term(solarDate);
+		
+		logger.info(term.toString());
+//		solarTerms.paiYue(2018);
 	}
 	
 	public void JQtest(int y) { // 节气使计算范例,y是年分,这是个测试函数

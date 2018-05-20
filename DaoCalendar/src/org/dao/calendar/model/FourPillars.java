@@ -2,6 +2,8 @@ package org.dao.calendar.model;
 
 import org.dao.calendar.config.Configurator;
 
+import com.google.gson.JsonObject;
+
 public class FourPillars {
 	  /**
 	   * 四柱干支
@@ -98,5 +100,27 @@ public class FourPillars {
 			   " Month GanZhi = " + Configurator.tianGan()[yg] + Configurator.diZhi()[yz] + 
 			   " Day GanZhi = " + Configurator.tianGan()[rg] + Configurator.diZhi()[rz] + 
 			   " Hour GanZhi = " + Configurator.tianGan()[sg] + Configurator.diZhi()[sz];
+	}
+	
+	public JsonObject toJson () {
+		JsonObject json = new JsonObject();
+		json.addProperty("YearGanZhi", Configurator.tianGan()[ng] +  Configurator.diZhi()[nz]);
+		json.addProperty("MonthGznZhi", Configurator.tianGan()[yg] + Configurator.diZhi()[yz]);
+		json.addProperty("DayGanZhi", Configurator.tianGan()[rg] + Configurator.diZhi()[rz]);
+		json.addProperty("HourGanZhi", Configurator.tianGan()[sg] + Configurator.diZhi()[sz]);
+		
+		JsonObject indexJson = new JsonObject();
+		indexJson.addProperty("ng", ng);
+		indexJson.addProperty("nz", nz);
+		indexJson.addProperty("yg", yg);
+		indexJson.addProperty("yz", yz);
+		indexJson.addProperty("rg", rg);
+		indexJson.addProperty("rz", rz);
+		indexJson.addProperty("sg", sg);
+		indexJson.addProperty("sz", sz);
+		
+		json.add("index", indexJson);
+		
+		return json;
 	}
 }

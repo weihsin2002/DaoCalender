@@ -8,6 +8,8 @@ import org.apache.log4j.Logger;
 import org.dao.calendar.config.Configurator;
 import org.dao.calendar.utils.Utils;
 
+import com.google.gson.JsonObject;
+
 public class SolarDate {
 	private Logger logger = Logger.getLogger(SolarDate.class);
 	
@@ -111,5 +113,21 @@ public class SolarDate {
 		int d = Utils.GetBitInt(solar11, 5, 0);
 
 		return Utils.SolarFromInt(Utils.SolarToInt(y, m, d) + offset - 1);
+	}
+	
+	public String toString () {
+		return "Year=" + this.year + ",Month=" + this.month + ",Day=" + this.day + ",Hour=" + this.hour + ",Minute="+this.min + ",Second="+this.sec;
+	}
+	
+	public JsonObject toJson () {
+		JsonObject json = new JsonObject();
+		json.addProperty("year", this.year);
+		json.addProperty("month", this.month);
+		json.addProperty("day", this.day);
+		json.addProperty("hour", this.hour);
+		json.addProperty("minute", this.min);
+		json.addProperty("second", this.sec);
+		
+		return json;
 	}
 }
