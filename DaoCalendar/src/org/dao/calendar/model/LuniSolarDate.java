@@ -1,14 +1,11 @@
 package org.dao.calendar.model;
 
-import org.apache.log4j.Logger;
 import org.dao.calendar.config.Configurator;
 import org.dao.calendar.utils.Utils;
 
 import com.google.gson.JsonObject;
 
 public class LuniSolarDate {
-	private static final Logger logger = Logger.getLogger(LuniSolarDate.class);
-
 	private boolean isleap;
 	private int day;
 	private int month;
@@ -102,6 +99,14 @@ public class LuniSolarDate {
 		return hour;
 	}
 	
+	public int minute() {
+		return minute;
+	}
+	
+	public int sec() {
+		return sec;
+	}
+	
 	public String lunarYearToGanZhi(int lunarYear){
 		return Configurator.tianGan()[(lunarYear-4) % 10] + Configurator.diZhi()[(lunarYear-4) % 12];
 	}
@@ -169,7 +174,12 @@ public class LuniSolarDate {
 		json.addProperty("minute", this.minute);
 		json.addProperty("second", this.sec);
 		json.addProperty("isLeap", this.isleap);
-		json.addProperty("days", this.days);
+		if (this.hour == 0 || this.hour == 23) {
+			json.addProperty("shi", Configurator.zhi()[0]);
+		} else {
+			json.addProperty("shi", Configurator.zhi()[(this.hour+1)/2]);
+		}
+		
 		
 		return json;
 	}

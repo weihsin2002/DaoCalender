@@ -53,8 +53,13 @@ public class Utils {
 		int y = Utils.GetBitInt(solar11, 12, 9);
 		int m = Utils.GetBitInt(solar11, 4, 5);
 		int d = Utils.GetBitInt(solar11, 5, 0);
+		int h = lunar.hour();
+		int min = lunar.minute();
+		int sec = lunar.sec();
 
-		return SolarFromInt(SolarToInt(y, m, d) + offset - 1);
+		SolarDate solarDate = SolarFromInt(SolarToInt(y, m, d) + offset - 1);  
+		
+		return (new SolarDate (solarDate.year(), solarDate.month(), solarDate.day(), h, min, sec));
 	}
 
 	  public static int getGanNumber (String tianGang) {

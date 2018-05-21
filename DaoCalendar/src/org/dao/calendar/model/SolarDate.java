@@ -65,7 +65,24 @@ public class SolarDate {
 			logger.error("Errer parsing SolarDate");
 		}
 	}
-	
+
+	public SolarDate (int y, int m, int d, int h, int min, int sec) {
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		this.year = y;
+		this.month = m;
+		this.day = d;
+		this.hour = h;
+		this.min = min;
+		this.sec = sec;
+		
+		try {
+			Date date = dateFormat.parse(y + "-" + m + "-" + d + " " + h + ":" + min + ":" + sec);
+			this.date = date;
+		} catch (Exception e) {
+			logger.error("Errer parsing SolarDate");
+		}
+	}
+
 	public int day() {
 		return day;
 	}

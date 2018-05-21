@@ -21,11 +21,17 @@ public class SolarTerms {
 	int thisYear;
 	int thisMonth;
 	int thisDay;
+	int thisHour;
+	int thisMinute;
+	int thisSecond;
 
 	private String nextTerm;
 	int termYear;
 	int termMonth;
 	int termDay;
+	int termHour;
+	int termMinute;
+	int termSecond;
 
 	 // ========角度变换===============  
 	 private final double rad = 180 * 3600 / Math.PI; // 每弧度的角秒数  
@@ -707,12 +713,14 @@ public class SolarTerms {
 	     break;  
 	   for (nun = i - 1; i < 13; i++)  
 	    yn[i - 1]--; // 注意yn中不含农历首月(所以取i-1),在公历中农历首月总是去年的所以不多做计算  
-	  }  
-	  String syn[] = new String[20];  
+	  } 
+	  String syn[] = new String[20];
+	  boolean isLeap = false;
 	  for (i = 0; i < tot; i++) { // 转为建寅月名,并做大小月分析  
 	   syn[i] = Configurator.lunarMonth()[(yn[i] + 10) % 12]; // 转建寅月名  
 	   if (i == nun)  
-	    syn[i] += "leap";  
+	    syn[i] += "leap";
+	    isLeap = true;
 //	   else  
 //	    syn[i] += "月"; // 标记是否闰月  
 //	   if (C[i + 1] - C[i] > 29)  
@@ -727,10 +735,10 @@ public class SolarTerms {
 	   int jm = (i * 2 + 17) % 24; // 中气名节气名  
 	   setFromJD(jq[i] + J2000 + (double)8 / 24, true);  
 	   out += Configurator.jieQi()[jm] + ":" + toStr() + " "; // 显示节气  
-	   yearlyTerms.add(new SolarTerm(toDate(), Configurator.jieQi()[jm])); 
+	   yearlyTerms.add(new SolarTerm(toDate(), Configurator.jieQi()[jm], isLeap)); 
 	   setFromJD(zq[i] + J2000 + (double)8 / 24, true);  
 	   out += Configurator.jieQi()[zm] + ":" + toStr() + " "; // 显示中气
-	   yearlyTerms.add(new SolarTerm(toDate(), Configurator.jieQi()[zm]));
+	   yearlyTerms.add(new SolarTerm(toDate(), Configurator.jieQi()[zm], isLeap));
 	   setFromJD(hs[i] + J2000 + (double)8 / 24, true);  
 	   out += syn[i] + ":" + toStr() + System.lineSeparator(); // 显示日月合朔  
 	  }  
@@ -750,25 +758,44 @@ public class SolarTerms {
 			  
 		 if (((SolarTerm) yearlyTerms.get(i)).time().after(solarHM.date())) {
 			 this.currentTerm = ((SolarTerm) yearlyTerms.get(i-1)).qi();
-			 this.thisYear = Integer.parseInt(new SimpleDateFormat("yyyy").format(((SolarTerm) yearlyTerms.get(i-2)).time()));
-			 this.thisMonth = Integer.parseInt(new SimpleDateFormat("MM").format(((SolarTerm) yearlyTerms.get(i-2)).time()));
-			 this.thisDay = Integer.parseInt(new SimpleDateFormat("dd").format(((SolarTerm) yearlyTerms.get(i-2)).time()));
 			 
-			 this.nextTerm = ((SolarTerm) yearlyTerms.get(i)).qi();
-			 this.termYear = Integer.parseInt(new SimpleDateFormat("yyyy").format(((SolarTerm) yearlyTerms.get(i-1)).time()));
-			 this.termMonth = Integer.parseInt(new SimpleDateFormat("MM").format(((SolarTerm) yearlyTerms.get(i-1)).time()));
-			 this.termDay = Integer.parseInt(new SimpleDateFormat("dd").format(((SolarTerm) yearlyTerms.get(i-1)).time()));
+			 logger.info("current solar term = " + this.currentTerm);
+			 logger.info("current solar term year = " + new SimpleDateFormat("yyyy").format(((SolarTerm) yearlyTerms.get(i-1)).time()));
+			 logger.info("current solar term month = " + new SimpleDateFormat("MM").format(((SolarTerm) yearlyTerms.get(i-1)).time()));
+			 logger.info("current solar term day = " + new SimpleDateFormat("dd").format(((SolarTerm) yearlyTerms.get(i-1)).time()));
+			 logger.info("current solar term hour = " + new SimpleDateFormat("HH").format(((SolarTerm) yearlyTerms.get(i-1)).time()));
+			 logger.info("current solar term minute = " + new SimpleDateFormat("mm").format(((SolarTerm) yearlyTerms.get(i-1)).time()));
+			 logger.info("current solar term second = " + new SimpleDateFormat("ss").format(((SolarTerm) yearlyTerms.get(i-1)).time()));
+			 
+			 this.thisYear = Integer.parseInt(new SimpleDateFormat("yyyy").format(((SolarTerm) yearlyTerms.get(i-1)).time()));
+			 this.thisMonth = Integer.parseInt(new SimpleDateFormat("MM").format(((SolarTerm) yearlyTerms.get(i-1)).time()));
+			 this.thisDay = Integer.parseInt(new SimpleDateFormat("dd").format(((SolarTerm) yearlyTerms.get(i-1)).time()));
+			 this.thisHour = Integer.parseInt(new SimpleDateFormat("HH").format(((SolarTerm) yearlyTerms.get(i-1)).time()));
+			 this.thisMinute = Integer.parseInt(new SimpleDateFormat("mm").format(((SolarTerm) yearlyTerms.get(i-1)).time()));
+			 this.thisSecond = Integer.parseInt(new SimpleDateFormat("ss").format(((SolarTerm) yearlyTerms.get(i-1)).time()));
 
-//				 this.currentTerm = ((SolarTerm) yearlyTerms.get(i-1)).qi();
-//				 this.nextTerm = ((SolarTerm) yearlyTerms.get(i)).qi();
-//				 this.termYear = Integer.parseInt(new SimpleDateFormat("yyyy").format(((SolarTerm) yearlyTerms.get(i-1)).time()));
-//				 this.termMonth = Integer.parseInt(new SimpleDateFormat("mm").format(((SolarTerm) yearlyTerms.get(i-1)).time()));
-//				 this.termDay = Integer.parseInt(new SimpleDateFormat("dd").format(((SolarTerm) yearlyTerms.get(i-1)).time()));
-				 break;
+			 this.nextTerm = ((SolarTerm) yearlyTerms.get(i)).qi();
+			 
+			 logger.info("next solar term = " + this.nextTerm);
+			 logger.info("next solar term year = " + new SimpleDateFormat("yyyy").format(((SolarTerm) yearlyTerms.get(i)).time()));
+			 logger.info("next solar term month = " + new SimpleDateFormat("MM").format(((SolarTerm) yearlyTerms.get(i)).time()));
+			 logger.info("next solar term day = " + new SimpleDateFormat("dd").format(((SolarTerm) yearlyTerms.get(i)).time()));
+			 logger.info("next solar term hour = " + new SimpleDateFormat("HH").format(((SolarTerm) yearlyTerms.get(i)).time()));
+			 logger.info("next solar term minute = " + new SimpleDateFormat("mm").format(((SolarTerm) yearlyTerms.get(i)).time()));
+			 logger.info("next solar term second = " + new SimpleDateFormat("ss").format(((SolarTerm) yearlyTerms.get(i)).time()));
+			 
+			 this.termYear = Integer.parseInt(new SimpleDateFormat("yyyy").format(((SolarTerm) yearlyTerms.get(i)).time()));
+			 this.termMonth = Integer.parseInt(new SimpleDateFormat("MM").format(((SolarTerm) yearlyTerms.get(i)).time()));
+			 this.termDay = Integer.parseInt(new SimpleDateFormat("dd").format(((SolarTerm) yearlyTerms.get(i)).time()));
+			 this.termHour = Integer.parseInt(new SimpleDateFormat("HH").format(((SolarTerm) yearlyTerms.get(i)).time()));
+			 this.termMinute = Integer.parseInt(new SimpleDateFormat("mm").format(((SolarTerm) yearlyTerms.get(i)).time()));
+			 this.termSecond = Integer.parseInt(new SimpleDateFormat("ss").format(((SolarTerm) yearlyTerms.get(i)).time()));
+			 
+			 break;
 			 }
 		 }
 		 
-		 return new Term(this.currentTerm, this.thisYear, this.thisMonth, this.thisDay, this.nextTerm, this.termYear, this.termMonth, this.termDay);
+		 return new Term(this.currentTerm, this.thisYear, this.thisMonth, this.thisDay, this.thisHour, this.thisMinute, this.thisSecond, this.nextTerm, this.termYear, this.termMonth, this.termDay, this.termHour, this.termMinute, this.termSecond);
 	 }
 	 
 	 public Term Term (LuniSolarDate lunar) {
@@ -787,24 +814,46 @@ public class SolarTerms {
 			 continue;
 			 }
 			  
-		 if (((SolarTerm) yearlyTerms.get(i)).time().after(solarHM.date())) {
+			 if (((SolarTerm) yearlyTerms.get(i)).time().after(solarHM.date())) {
 				 this.currentTerm = ((SolarTerm) yearlyTerms.get(i-1)).qi();
-				 this.thisYear = Integer.parseInt(new SimpleDateFormat("yyyy").format(((SolarTerm) yearlyTerms.get(i-2)).time()));
-				 this.thisMonth = Integer.parseInt(new SimpleDateFormat("MM").format(((SolarTerm) yearlyTerms.get(i-2)).time()));
-				 this.thisDay = Integer.parseInt(new SimpleDateFormat("dd").format(((SolarTerm) yearlyTerms.get(i-2)).time()));
 				 
+				 logger.info("current solar term = " + this.currentTerm);
+				 logger.info("current solar term year = " + new SimpleDateFormat("yyyy").format(((SolarTerm) yearlyTerms.get(i-1)).time()));
+				 logger.info("current solar term month = " + new SimpleDateFormat("MM").format(((SolarTerm) yearlyTerms.get(i-1)).time()));
+				 logger.info("current solar term day = " + new SimpleDateFormat("dd").format(((SolarTerm) yearlyTerms.get(i-1)).time()));
+				 logger.info("current solar term hour = " + new SimpleDateFormat("HH").format(((SolarTerm) yearlyTerms.get(i-1)).time()));
+				 logger.info("current solar term minute = " + new SimpleDateFormat("mm").format(((SolarTerm) yearlyTerms.get(i-1)).time()));
+				 logger.info("current solar term second = " + new SimpleDateFormat("ss").format(((SolarTerm) yearlyTerms.get(i-1)).time()));
+				 
+				 this.thisYear = Integer.parseInt(new SimpleDateFormat("yyyy").format(((SolarTerm) yearlyTerms.get(i-1)).time()));
+				 this.thisMonth = Integer.parseInt(new SimpleDateFormat("MM").format(((SolarTerm) yearlyTerms.get(i-1)).time()));
+				 this.thisDay = Integer.parseInt(new SimpleDateFormat("dd").format(((SolarTerm) yearlyTerms.get(i-1)).time()));
+				 this.thisHour = Integer.parseInt(new SimpleDateFormat("HH").format(((SolarTerm) yearlyTerms.get(i-1)).time()));
+				 this.thisMinute = Integer.parseInt(new SimpleDateFormat("mm").format(((SolarTerm) yearlyTerms.get(i-1)).time()));
+				 this.thisSecond = Integer.parseInt(new SimpleDateFormat("ss").format(((SolarTerm) yearlyTerms.get(i-1)).time()));
+
 				 this.nextTerm = ((SolarTerm) yearlyTerms.get(i)).qi();
-				 this.termYear = Integer.parseInt(new SimpleDateFormat("yyyy").format(((SolarTerm) yearlyTerms.get(i-1)).time()));
-				 this.termMonth = Integer.parseInt(new SimpleDateFormat("MM").format(((SolarTerm) yearlyTerms.get(i-1)).time()));
-				 this.termDay = Integer.parseInt(new SimpleDateFormat("dd").format(((SolarTerm) yearlyTerms.get(i-1)).time()));
 				 
-				 logger.info("this.termYear = " + this.termYear);
-				 logger.info("this.termMonth = " + this.termMonth);
+				 logger.info("next solar term = " + this.nextTerm);
+				 logger.info("next solar term year = " + new SimpleDateFormat("yyyy").format(((SolarTerm) yearlyTerms.get(i)).time()));
+				 logger.info("next solar term month = " + new SimpleDateFormat("MM").format(((SolarTerm) yearlyTerms.get(i)).time()));
+				 logger.info("next solar term day = " + new SimpleDateFormat("dd").format(((SolarTerm) yearlyTerms.get(i)).time()));
+				 logger.info("next solar term hour = " + new SimpleDateFormat("HH").format(((SolarTerm) yearlyTerms.get(i)).time()));
+				 logger.info("next solar term minute = " + new SimpleDateFormat("mm").format(((SolarTerm) yearlyTerms.get(i)).time()));
+				 logger.info("next solar term second = " + new SimpleDateFormat("ss").format(((SolarTerm) yearlyTerms.get(i)).time()));
+				 
+				 this.termYear = Integer.parseInt(new SimpleDateFormat("yyyy").format(((SolarTerm) yearlyTerms.get(i)).time()));
+				 this.termMonth = Integer.parseInt(new SimpleDateFormat("MM").format(((SolarTerm) yearlyTerms.get(i)).time()));
+				 this.termDay = Integer.parseInt(new SimpleDateFormat("dd").format(((SolarTerm) yearlyTerms.get(i)).time()));
+				 this.termHour = Integer.parseInt(new SimpleDateFormat("HH").format(((SolarTerm) yearlyTerms.get(i)).time()));
+				 this.termMinute = Integer.parseInt(new SimpleDateFormat("mm").format(((SolarTerm) yearlyTerms.get(i)).time()));
+				 this.termSecond = Integer.parseInt(new SimpleDateFormat("ss").format(((SolarTerm) yearlyTerms.get(i)).time()));
+				 
 				 break;
+				 }
 			 }
-		 }
 		 
-		 return new Term(this.currentTerm, this.thisYear, this.thisMonth, this.thisDay, this.nextTerm, this.termYear, this.termMonth, this.termDay);
+		 return new Term(this.currentTerm, this.thisYear, this.thisMonth, this.thisDay, this.thisHour, this.thisMinute, this.thisSecond, this.nextTerm, this.termYear, this.termMonth, this.termDay, this.termHour, this.termMinute, this.termSecond);
 	 }
 
 	public String cCurrentTerm() {
