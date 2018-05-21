@@ -22,6 +22,10 @@ public class SolarDate {
 	
 	private Date date;
 	
+	public SolarDate () {
+		
+	}
+	
 	public SolarDate (int y, int m, int d) {
 		this.year = y;
 		this.month = m;
@@ -129,5 +133,5 @@ public class SolarDate {
 		json.addProperty("second", this.sec);
 		
 		return json;
-	}
+	}	
 }

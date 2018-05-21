@@ -92,7 +92,17 @@ public class Configurator {
 	private static int[] GANYINYANG = {0,1,0,1,0,1,0,1,0,1,0};
 	private static int[] ZIYINYANG =  {0,1,0,1,0,1,0,1,0,1,0,1,0};
 	  
-	  
+    private static final String[] jiazhi = {
+            "JiaZi", "YiChou", "BingYen", "DingMou", "WuChen", "JiSi", "GenWu", "XinWei", "RenShen", "GuiYou",
+            "JiaXu", "YiHai", "BingZi", "DingChou", "WuYin", "JiMou", "GenChen", "XinSi", "RenWu", "GuiWei",
+            "JiaShen", "YiYou", "BingXu", "DingHai", "WuZi", "JiChou", "GenYin", "XinMou", "RenChen", "GuiSi",
+            "JiaWu", "YiWei", "BingShen", "DingYou", "WuXu", "JiHai", "GenZi", "XinChou", "RenYin", "GuiMou",
+            "JiaChen", "YiSi", "BingWu", "DingWeu", "WuShen", "JiYou", "GenXu", "XinHai", "RenZi", "GuiChou",
+            "JiaYin", "YiMou", "BingChen", "DingSi", "WuWu", "JiWei", "GenShen", "XinYou", "RenXu", "GuiHai"
+        };
+    
+    private final static String[] Gan = {"Jia","Yi","Bing","Ding","Wu","Ji","Geng","Xin","Ren","Gui"};
+    private final static String[] Zhi = {"Zi","Chou","Yin","Mao","Chen","Si","Wu","Wei","Shen","You","Xu","Hai"};
 
 	static {
 		initialize();
@@ -138,5 +148,17 @@ public class Configurator {
 
 	public static int[] hourNum() {
 		return HOURNUM;
-	}	
+	}
+
+	public static String[] jiazhi() {
+		return jiazhi;
+	}
+
+	public static String[] gan() {
+		return Gan;
+	}
+
+	public static String[] zhi() {
+		return Zhi;
+	}
 }

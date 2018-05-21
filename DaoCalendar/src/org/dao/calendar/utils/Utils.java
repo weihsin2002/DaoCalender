@@ -57,4 +57,23 @@ public class Utils {
 		return SolarFromInt(SolarToInt(y, m, d) + offset - 1);
 	}
 
+	  public static int getGanNumber (String tianGang) {
+		  for (int i=0; i<10; i++) {
+			  if (tianGang.equalsIgnoreCase(Configurator.tianGan()[i])) {
+				  return i;
+			  }
+		  }
+		  
+		  return -1;
+	  }
+	  
+	  public static int getZhiNumber (String diZhi) {
+		  for (int i=0; i<12; i++) {
+			  if (diZhi.equalsIgnoreCase(Configurator.diZhi()[i])) {
+				  return i;
+			  }
+		  }
+		  
+		  return -1;		  
+	  }
 }

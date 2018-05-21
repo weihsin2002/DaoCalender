@@ -19,8 +19,6 @@ public class LuniSolarDate {
 	private int days;
 	private int leap; // leap month
 	
-	FourPillars fourPillars;
-	
 	public LuniSolarDate () {
 		
 	}
@@ -39,9 +37,7 @@ public class LuniSolarDate {
 		
 		if (this.leap != 0 && this.month == this.leap) {
 			this.isleap = isleap;
-		}
-		
-		setFourPillars();
+		}				
 	}
 	
 	public LuniSolarDate (int year, int month, int day, int hour, int minute, boolean isleap) { // initializing lunar object by entering lunar date 
@@ -59,8 +55,6 @@ public class LuniSolarDate {
 		if (this.leap != 0 && this.month == this.leap) {
 			this.isleap = isleap;
 		}
-		
-		setFourPillars();
 	}
 
 	public LuniSolarDate (int year, int month, int day, int hour, int minute, int second, boolean isleap) { // initializing lunar object by entering lunar date 
@@ -78,8 +72,6 @@ public class LuniSolarDate {
 		if (this.leap != 0 && this.month == this.leap) {
 			this.isleap = isleap;
 		}
-		
-		setFourPillars();
 	}
 	
 	public boolean isleap() {
@@ -113,7 +105,7 @@ public class LuniSolarDate {
 	public String lunarYearToGanZhi(int lunarYear){
 		return Configurator.tianGan()[(lunarYear-4) % 10] + Configurator.diZhi()[(lunarYear-4) % 12];
 	}
-
+	
 	public LuniSolarDate SolarToLunar(SolarDate solar) {
 		int index = solar.year() - Configurator.solar_1_1()[0];
 		int data = (solar.year() << 9) | (solar.month() << 5)
@@ -163,56 +155,9 @@ public class LuniSolarDate {
 		
 		return lunar;
 	}
-	
-	private void setFourPillars() {
-		logger.info("Lunar Year = " + this.year + " Lunar Month = " + this.month + " Lunar Day = " + this.day + " Hour = " + this.hour + " Lunar days=" + this.days);
 		
-		int gyear = this.year - 1930;
-	    int ng = (gyear+7) % 10 == 0 ? 10 : (gyear+7) % 10;
-	    int nz = (gyear+7) % 12 == 0 ? 12 : (gyear+7) % 12;
-	    
-	    int yz = (this.month+2)%12 == 0 ? 12 : (this.month+2)%12;
-	    
-	    int yg = Configurator.yuebynian()[ng];
-	    int yuezhu = yz < 3 ? yz+12 : yz;
-	    yg = (yg+yuezhu-3)%10 == 0 ? 10 : (yg+yuezhu-3)%10;
-	    int rg = (this.days+2)%10==0 ? 10: (this.days+2)%10;
-	    int rz = (this.days+6)%12==0 ? 12: (this.days+6)%12;
-
-	    int sg = Configurator.shibyri()[rg];
-	    
-	    int i=1;
-	    for(; i<=12; i++) {
-	      if(Configurator.hourNum()[i] > this.hour*100+this.minute && i==1) {
-	        break;
-	      }else if(Configurator.hourNum()[i] <= this.hour*100+this.minute && i==12) {
-	        i=1;
-	        rg = (rg+1)%10==0?10:(rg+1)%10;
-	        rz = (rz+1)%12==0?12:(rz+1)%12;
-	        sg = Configurator.shibyri()[rg];
-	        break;
-	      }else if(Configurator.hourNum()[i] <= this.hour*100+this.minute && Configurator.hourNum()[i+1] > this.hour*100+this.minute) {
-	        i++;
-	        break;
-	      }
-	    }
-	    
-	    int sz = i;
-	    sg = (sz+sg-1)%10==0 ? 10 : (sz+sg-1)%10;
-	    
-	    logger.info("ng=" + ng + " nz=" + nz + " yg=" + yg + " yz=" + yz + " rg=" + rg + " rz=" +  rz + " sg=" + sg + " sz=" + sz);
-	    
-	    fourPillars = new FourPillars(ng, nz, yg, yz, rg, rz, sg, sz);
-
-	    logger.info("Four Pillars = " + fourPillars.toString());
-	}	
-	
-	public FourPillars fourPillars () {
-		return fourPillars;
-	}
-	
 	public String toString () {
-		return "Year=" + this.year + ",Month=" + this.month + ",Day=" + this.day + ",Hour=" + this.hour + ",Minute="+this.minute + ",Second="+this.sec + ",isLeap=" + this.isleap + ",days=" + this.days + ",Four Pillars=" + fourPillars.toString();
+		return "Year=" + this.year + ",Month=" + this.month + ",Day=" + this.day + ",Hour=" + this.hour + ",Minute="+this.minute + ",Second="+this.sec + ",isLeap=" + this.isleap + ",days=" + this.days;
 	}
 	
 	public JsonObject toJson () {
@@ -225,7 +170,6 @@ public class LuniSolarDate {
 		json.addProperty("second", this.sec);
 		json.addProperty("isLeap", this.isleap);
 		json.addProperty("days", this.days);
-		json.add("FourPillars", this.fourPillars.toJson());
 		
 		return json;
 	}
