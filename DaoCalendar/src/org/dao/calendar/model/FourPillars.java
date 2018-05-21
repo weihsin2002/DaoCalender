@@ -100,7 +100,6 @@ public class FourPillars {
 	        cal.set(solarDate.year(), solarDate.month()-1, solarDate.day(), solarDate.hour(), solarDate.min(), solarDate.sec());
 	        
 	        int offset = (int) ((cal.getTime().getTime() - baseDate.getTime()) / 86400000L);
-	        logger.info("offset=" + offset);
 	        offset=(offset+40)%60;
 	        //求的日的干支
 	        d=Configurator.jiazhi()[offset];
@@ -123,8 +122,6 @@ public class FourPillars {
 	        	zHour = 0;
 	        }
 	        
-	        logger.info("%10=" + (offset+gHour)%10);
-	        
 	        //求得时辰的干支   
 	        h=Configurator.gan()[(offset+gHour)%10]+Configurator.zhi()[zHour];
 	        
@@ -133,30 +130,17 @@ public class FourPillars {
 	        bazi[7]=zHour;
         
 	        if (cal.get(Calendar.HOUR_OF_DAY) == 23) {
-	        	offset = (int) ((cal.getTime().getTime() - baseDate.getTime()) / 86400000L);
-	        	offset=(offset+40)%60;
-	        	gHour = (22 + 1) / 2;
-	        	offset=(offset % 5 )*2;
+	        	gHour = 11; //(22 + 1) / 2;
 	        	
 	        	int gIndex = (offset+gHour)%10;
 	        	
 	        	gIndex ++;
-	        	
-	        	logger.info("gIndex = " + gIndex);
-	        	
 	        	if (gIndex > 9) gIndex = 0; 
 	        	
 		        h=Configurator.gan()[gIndex]+Configurator.zhi()[zHour];
-	        	
-	        	logger.info("offset1+gHour=" + offset + "+" + gHour + "=" + (offset+gHour));
-		        logger.info("%10=" + (offset+gHour)%10);
-
-		        //Xulun 
 		        bazi[6]=gIndex;
 	        }
 	        
-	        //在此处输出我们的年月日时的天干地支
-	        //return y+","+m+","+d+","+h;
 	        logger.info(y+","+m+","+d+","+h);
 	        
 	        this.ng = bazi[0]+1;

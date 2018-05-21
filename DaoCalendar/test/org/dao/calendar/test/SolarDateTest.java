@@ -15,7 +15,7 @@ public class SolarDateTest {
 	public static void main(String[] args) throws ParseException {
 		Date date = new Date();
 		
-		String year = "2018-05-20 23 00 00";
+		String year = "2018-05-20 00 00 00";
 		
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH mm ss");  
 		date = sdf.parse(year);
