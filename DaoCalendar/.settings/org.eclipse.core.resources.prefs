@@ -3,4 +3,5 @@ encoding//src/org/dao/calendar/SolarTerms.java=UTF-8
 encoding//src/org/dao/calendar/config/Configurator.java=UTF-8
 encoding//src/org/dao/calendar/model/FourPillars.java=UTF-8
 encoding//src/org/dao/calendar/model/LuniSolarDate.java=UTF-8
+encoding//src/org/dao/calendar/model/QiDivision.java=UTF-8
 encoding//test/org/dao/calendar/test/SolarTermsTest.java=UTF-8

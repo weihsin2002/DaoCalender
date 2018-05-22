@@ -104,6 +104,18 @@ public class Configurator {
     private final static String[] Gan = {"Jia","Yi","Bing","Ding","Wu","Ji","Geng","Xin","Ren","Gui"};
     private final static String[] Zhi = {"Zi","Chou","Yin","Mao","Chen","Si","Wu","Wei","Shen","You","Xu","Hai"};
 
+    //每个节气上元头一天的干支不是甲子或甲午，就是己卯或己酉；
+    //中元头一天的干支不是甲申或甲寅，就是己巳乙亥；
+    //下元头一天的干支不是甲戌或甲辰，就是己丑或己未。
+    private static final int[][][] sanyuan = new int[4][11][13];
+    
+    private static final String[] xunname = {"","JiaZi(Wu)","JiaXu(Ji)","JiaShen(Geng)","JiaWu(Xin)","JiaChen(Ren)","JiaYen(Gui)"};
+    
+    //甲子（戊）旬、甲戌（己）旬、甲申（庚）旬、甲午（辛）旬、甲辰（壬）旬、甲寅（癸）旬；分别对应数字：1，2，3，4，5，6；
+    //60甲子共分6旬，每旬分别对应数字：0甲子，10甲戌，8甲申，6甲午，4甲辰，2甲寅  此数即（旬支-旬干+12）%12
+    //旬0对应： 旬序数xunshu[0]=1,对应旬名为：xunname[1],旬支为xunzi[0],旬干为xungan[0]
+    private static final int[] xunshu = {1, 0, 6, 0, 5, 0, 4, 0, 3, 0, 2}; 
+    
 	static {
 		initialize();
 	}
@@ -112,6 +124,10 @@ public class Configurator {
 
 	private static void initialize() {
 		logger.info("Initializing Calendar Configurator");
+		
+	    sanyuan[1][1][1] = sanyuan[1][1][7] = sanyuan[1][6][4] = sanyuan[1][6][10] = 1;
+	    sanyuan[2][1][3] = sanyuan[2][1][9] = sanyuan[2][6][6] = sanyuan[2][6][12] = 1;
+	    sanyuan[3][1][5] = sanyuan[3][1][11] = sanyuan[3][6][2] = sanyuan[3][6][8] = 1;
 	}
 
 	public static int[] lunar_month_days() {
@@ -160,5 +176,17 @@ public class Configurator {
 
 	public static String[] zhi() {
 		return Zhi;
+	}
+
+	public static int[][][] sanyuan() {
+		return sanyuan;
+	}
+
+	public static String[] xunname() {
+		return xunname;
+	}
+
+	public static int[] xunshu() {
+		return xunshu;
 	}
 }

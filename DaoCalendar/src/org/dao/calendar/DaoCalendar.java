@@ -2,6 +2,7 @@ package org.dao.calendar;
 
 import org.dao.calendar.model.FourPillars;
 import org.dao.calendar.model.LuniSolarDate;
+import org.dao.calendar.model.QiDivision;
 import org.dao.calendar.model.SolarDate;
 import org.dao.calendar.model.QiTerm;
 
@@ -10,7 +11,5 @@ public class DaoCalendar {
 	LuniSolarDate luniSolarDate;
 	FourPillars fourPillars;
 	QiTerm qiTerm;
-	
-	
-
+	QiDivision qiDivision;
 }

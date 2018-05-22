@@ -7,6 +7,7 @@ import java.util.Date;
 import org.apache.log4j.Logger;
 import org.dao.calendar.model.FourPillars;
 import org.dao.calendar.model.LuniSolarDate;
+import org.dao.calendar.model.QiDivision;
 import org.dao.calendar.model.SolarDate;
 import org.dao.calendar.utils.Utils;
 
@@ -32,6 +33,10 @@ public class SolarDateTest {
 
 		solarDate = Utils.LunarToSolar(luniSolarDate);
 		logger.info(solarDate.toJson().toString());
+		
+		FourPillars fourPillars = new FourPillars(solarDate, luniSolarDate);
+		QiDivision qiDivision = new QiDivision(fourPillars);
+		logger.info("QiDivision=" + qiDivision.toJson().toString());
 	}
 
 }
