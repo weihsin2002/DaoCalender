@@ -2,7 +2,7 @@ package org.dao.calendar.model;
 
 import com.google.gson.JsonObject;
 
-public class Term {
+public class QiTerm {
 	private String currentTerm;
 	private int thisYear;
 	private int thisMonth;
@@ -19,7 +19,7 @@ public class Term {
 	private int termMinute;
 	private int termSecond;
 
-	public Term (String currentTerm, int thisYear, int thisMonth, int thisDay, int thisHour, int thisMinute, int thisSecond, String nextTerm, int termYear, int termMonth, int termDay, int termHour, int termMinute, int termSecond) {
+	public QiTerm (String currentTerm, int thisYear, int thisMonth, int thisDay, int thisHour, int thisMinute, int thisSecond, String nextTerm, int termYear, int termMonth, int termDay, int termHour, int termMinute, int termSecond) {
 		 this.currentTerm = currentTerm;
 		 this.thisYear = thisYear;
 		 this.thisMonth = thisMonth;

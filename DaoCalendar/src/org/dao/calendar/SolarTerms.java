@@ -1,6 +1,6 @@
 package org.dao.calendar;
 
-import org.dao.calendar.model.Term;
+import org.dao.calendar.model.QiTerm;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -715,12 +715,10 @@ public class SolarTerms {
 	    yn[i - 1]--; // 注意yn中不含农历首月(所以取i-1),在公历中农历首月总是去年的所以不多做计算  
 	  } 
 	  String syn[] = new String[20];
-	  boolean isLeap = false;
 	  for (i = 0; i < tot; i++) { // 转为建寅月名,并做大小月分析  
 	   syn[i] = Configurator.lunarMonth()[(yn[i] + 10) % 12]; // 转建寅月名  
 	   if (i == nun)  
 	    syn[i] += "leap";
-	    isLeap = true;
 //	   else  
 //	    syn[i] += "月"; // 标记是否闰月  
 //	   if (C[i + 1] - C[i] > 29)  
@@ -735,17 +733,17 @@ public class SolarTerms {
 	   int jm = (i * 2 + 17) % 24; // 中气名节气名  
 	   setFromJD(jq[i] + J2000 + (double)8 / 24, true);  
 	   out += Configurator.jieQi()[jm] + ":" + toStr() + " "; // 显示节气  
-	   yearlyTerms.add(new SolarTerm(toDate(), Configurator.jieQi()[jm], isLeap)); 
+	   yearlyTerms.add(new SolarTerm(toDate(), Configurator.jieQi()[jm])); 
 	   setFromJD(zq[i] + J2000 + (double)8 / 24, true);  
 	   out += Configurator.jieQi()[zm] + ":" + toStr() + " "; // 显示中气
-	   yearlyTerms.add(new SolarTerm(toDate(), Configurator.jieQi()[zm], isLeap));
+	   yearlyTerms.add(new SolarTerm(toDate(), Configurator.jieQi()[zm]));
 	   setFromJD(hs[i] + J2000 + (double)8 / 24, true);  
 	   out += syn[i] + ":" + toStr() + System.lineSeparator(); // 显示日月合朔  
 	  }  
 	  logger.info(out);  
 	 } 
 
-	 public Term Term (SolarDate solar) {
+	 public QiTerm Term (SolarDate solar) {
 		 paiYue(solar.year());
 		 paiYue(solar.year()+1);
 
@@ -795,10 +793,10 @@ public class SolarTerms {
 			 }
 		 }
 		 
-		 return new Term(this.currentTerm, this.thisYear, this.thisMonth, this.thisDay, this.thisHour, this.thisMinute, this.thisSecond, this.nextTerm, this.termYear, this.termMonth, this.termDay, this.termHour, this.termMinute, this.termSecond);
+		 return new QiTerm(this.currentTerm, this.thisYear, this.thisMonth, this.thisDay, this.thisHour, this.thisMinute, this.thisSecond, this.nextTerm, this.termYear, this.termMonth, this.termDay, this.termHour, this.termMinute, this.termSecond);
 	 }
 	 
-	 public Term Term (LuniSolarDate lunar) {
+	 public QiTerm Term (LuniSolarDate lunar) {
 		 SolarDate solar = Utils.LunarToSolar(lunar);
 		 
 		 logger.info("solar year = " + solar.year());
@@ -853,7 +851,7 @@ public class SolarTerms {
 				 }
 			 }
 		 
-		 return new Term(this.currentTerm, this.thisYear, this.thisMonth, this.thisDay, this.thisHour, this.thisMinute, this.thisSecond, this.nextTerm, this.termYear, this.termMonth, this.termDay, this.termHour, this.termMinute, this.termSecond);
+		 return new QiTerm(this.currentTerm, this.thisYear, this.thisMonth, this.thisDay, this.thisHour, this.thisMinute, this.thisSecond, this.nextTerm, this.termYear, this.termMonth, this.termDay, this.termHour, this.termMinute, this.termSecond);
 	 }
 
 	public String cCurrentTerm() {

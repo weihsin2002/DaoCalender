@@ -6,7 +6,7 @@ import org.apache.log4j.Logger;
 import org.dao.calendar.SolarTerms;
 import org.dao.calendar.config.Configurator;
 import org.dao.calendar.model.SolarDate;
-import org.dao.calendar.model.Term;
+import org.dao.calendar.model.QiTerm;
 
 public class SolarTermsTest {
 
@@ -18,7 +18,7 @@ public class SolarTermsTest {
 		
 		SolarTerms solarTerms = new SolarTerms();
 		SolarDate solarDate = new SolarDate(new Date());
-		Term term = solarTerms.Term(solarDate);
+		QiTerm term = solarTerms.Term(solarDate);
 		
 		logger.info(term.toString());
 //		solarTerms.paiYue(2018);
