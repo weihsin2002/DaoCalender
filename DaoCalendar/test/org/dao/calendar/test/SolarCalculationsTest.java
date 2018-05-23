@@ -1,6 +1,7 @@
 package org.dao.calendar.test;
 
 import java.text.SimpleDateFormat;
+import java.time.ZonedDateTime;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -15,9 +16,18 @@ public class SolarCalculationsTest {
 	
 	public static void main(String[] args) {
 		
-		SolarCalculations solarCalculations = new  SolarCalculations();
+		ZonedDateTime t = ZonedDateTime.now();
+			
+ 		logger.info(t.getZone().getRules().isDaylightSavings(t.toInstant()));
+ 		
+		SolarCalculations solarCalculations = new  SolarCalculations(37.7749, -122.4194, t.getZone().getRules().isDaylightSavings(t.toInstant()));
 		
- 		logger.info(date1.toString());
+		Calendar cal = Calendar.getInstance();;
+		cal.setTime(new Date());
+		
+		double minute = solarCalculations.calcEquationOfTime(cal);
+		
+		Date date = new Date(minute);
 	}
 
 }
