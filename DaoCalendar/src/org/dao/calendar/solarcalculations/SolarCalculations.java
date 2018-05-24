@@ -75,8 +75,8 @@ public class SolarCalculations {
 
   public int[] calcHourMinSec(double timeDecimal) {
     int[] output = new int[3];
-    output[0] = (int) timeDecimal; // hour
-    double minutesDecimal = (timeDecimal - output[0])*60;
+    output[0] = (int) timeDecimal/60; // hour
+    double minutesDecimal = (timeDecimal - output[0]*60);
     output[1] = (int) minutesDecimal;
     output[2] = (int) ((minutesDecimal - output[1])*60);
     return output;
@@ -195,7 +195,7 @@ public class SolarCalculations {
   }
 
   // returns: true solar time in minutes
-  private double calcTrueSolarTime(Calendar cal) {
+  public double calcTrueSolarTime(Calendar cal) {
     double eqTime = calcEquationOfTime(cal);
     double time = calcTimeDecimal(cal);
     double offset = getOffset(cal);

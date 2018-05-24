@@ -1,11 +1,9 @@
 package org.dao.calendar.test;
 
-import java.text.SimpleDateFormat;
 import java.time.ZonedDateTime;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.TimeZone;
 
 import org.apache.log4j.Logger;
 import org.dao.calendar.solarcalculations.SolarCalculations;
@@ -25,9 +23,15 @@ public class SolarCalculationsTest {
 		Calendar cal = Calendar.getInstance();;
 		cal.setTime(new Date());
 		
-		double minute = solarCalculations.calcEquationOfTime(cal);
+		double minutes = solarCalculations.calcTrueSolarTime(cal);
 		
-		Date date = new Date(minute);
+		logger.info("minutes=" + minutes);
+		
+		int [] d = solarCalculations.calcHourMinSec(minutes);
+		
+		String[] strArray = Arrays.stream(d).mapToObj(String::valueOf).toArray(String[]::new);
+				
+		logger.info("date=" + Arrays.toString(strArray));
 	}
 
 }
