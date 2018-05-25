@@ -5,8 +5,6 @@ import java.util.Calendar;
 import java.util.Date;
 
 import org.apache.log4j.Logger;
-import org.dao.calendar.config.Configurator;
-import org.dao.calendar.utils.Utils;
 
 import com.google.gson.JsonObject;
 
@@ -110,31 +108,6 @@ public class SolarDate {
 	public Date date() {
 		return date;
 	}
-
-	public SolarDate LunarToSolar(LuniSolarDate lunar) {
-		int offset = 0;
-		int loopend = lunar.leap();
-		if (!lunar.isleap()) {
-			if (lunar.month() <= lunar.leap() || lunar.leap() == 0) {
-				loopend = lunar.month() - 1;
-			} else {
-				loopend = lunar.month();
-			}
-		}
-
-		for (int i = 0; i < loopend; i++) {
-			offset += Utils.GetBitInt(lunar.days(), 1, 12 - i) == 1 ? 30 : 29;
-		}
-		offset += lunar.day();
-
-		int solar11 = Configurator.solar_1_1()[lunar.year() - Configurator.solar_1_1()[0]];
-
-		int y = Utils.GetBitInt(solar11, 12, 9);
-		int m = Utils.GetBitInt(solar11, 4, 5);
-		int d = Utils.GetBitInt(solar11, 5, 0);
-
-		return Utils.SolarFromInt(Utils.SolarToInt(y, m, d) + offset - 1);
-	}
 	
 	public String toString () {
 		return "Year=" + this.year + ",Month=" + this.month + ",Day=" + this.day + ",Hour=" + this.hour + ",Minute="+this.min + ",Second="+this.sec;
@@ -148,7 +121,7 @@ public class SolarDate {
 		json.addProperty("hour", this.hour);
 		json.addProperty("minute", this.min);
 		json.addProperty("second", this.sec);
-		
+				
 		return json;
 	}	
 }

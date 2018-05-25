@@ -17,6 +17,13 @@ public class SolarDateTest {
 	public static void main(String[] args) throws ParseException {
 		Date date = new Date();
 		
+		Date trueSolarTime = Utils.calTrueSolarTime(date);
+		
+		SolarDate trueSolarDate = new SolarDate(trueSolarTime);
+		
+		logger.info(trueSolarDate.toJson());
+		
+		
 //		String year = "2018-05-20 22 00 00";
 //		
 //        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH mm ss");  
@@ -26,8 +33,7 @@ public class SolarDateTest {
 		
 		logger.info(solarDate.toJson());
 		
-		LuniSolarDate luniSolarDate = new LuniSolarDate();
-		luniSolarDate = luniSolarDate.SolarToLunar(solarDate);
+		LuniSolarDate luniSolarDate = new LuniSolarDate(solarDate);
 		
 		logger.info(luniSolarDate.toJson().toString());
 

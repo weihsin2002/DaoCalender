@@ -116,6 +116,8 @@ public class Configurator {
     //旬0对应： 旬序数xunshu[0]=1,对应旬名为：xunname[1],旬支为xunzi[0],旬干为xungan[0]
     private static final int[] xunshu = {1, 0, 6, 0, 5, 0, 4, 0, 3, 0, 2}; 
     
+	private static final String dbLocation = "geodb/GeoLite2-City.mmdb";
+    
 	static {
 		initialize();
 	}
@@ -188,5 +190,9 @@ public class Configurator {
 
 	public static int[] xunshu() {
 		return xunshu;
+	}
+
+	public static String dblocation() {
+		return dbLocation;
 	}
 }
