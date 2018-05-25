@@ -1,6 +1,8 @@
 package org.dao.calendar.model;
 
+import org.apache.log4j.Logger;
 import org.dao.calendar.config.Configurator;
+import org.dao.calendar.test.Test;
 
 import com.google.gson.JsonObject;
 
@@ -9,6 +11,8 @@ public class QiDivision {
 	String hourLead; //XunShou
 	String division; //Yuan : early, middle, late
 	int days; // the X days from the XunShou
+	
+	private static final Logger logger = Logger.getLogger(QiDivision.class);
 	
 	public QiDivision (FourPillars fourPillars) {
 	    this.hourLead = Configurator.xunname()[getXunShu(fourPillars.sg(), fourPillars.sz())];
