@@ -81,6 +81,10 @@ public class DaoCalendar {
 		return trueQiTerm;
 	}
 	
+	public QiDivision trueQiDivision() {
+		return trueQiDivision;
+	}
+	
 	public JsonObject toJson () {
 		JsonObject json = new JsonObject();
 		JsonObject solarJson = new JsonObject();
