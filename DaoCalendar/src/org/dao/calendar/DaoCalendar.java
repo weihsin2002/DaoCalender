@@ -85,6 +85,10 @@ public class DaoCalendar {
 		return trueQiDivision;
 	}
 	
+	public FourPillars trueFourPillars() {
+		return fourPillars;
+	}
+	
 	public JsonObject toJson () {
 		JsonObject json = new JsonObject();
 		JsonObject solarJson = new JsonObject();
