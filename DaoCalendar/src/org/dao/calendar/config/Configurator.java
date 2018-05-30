@@ -74,10 +74,7 @@ public class Configurator {
 	private static String JieQi[] = {  
 			   "Spring Equinox","Pure Brightness","Grain Rain","Start of Summer","Grain Full","Grain in Ear","Summer Solstice","Slight Heat","Great Heat","Start of Autumn","The End of Heat","White Dew",  
 			   "Autumn Equinox","Cold Dew","Frost Descent","Start of Winter","Light Snow","Heavy Snow","Winter Solstice","Lesser Cold","Greater Cold","Start of Spring","Rain Water","Insects Awaken"};  
-	
-	private static String[] tianGan = {"","Jia","Yi","Bing","Ding","Wu","Ji","Geng","Xin","Ren","Gui"};
-	private static String[] diZhi = {"","Zi","Chou","Yin","Mao","Chen","Si","Wu","Wei","Shen","You","Xu","Hai"};
-	
+		
 	private static String lunarMonth[] = { "First Lunar Month", "Second Lunar Month", "Third Lunar Month", "Fourth Lunar Month", "Fifth Lunar Month", "Sixth Lunar Month", "Seventh Lunar Month", "Eighth Lunar Month", "Ninth Lunar Month", "Tenth Lunar Month", "Eleventh Lunar Month", "Twelfth Lunar Month" };
 	
 	private static int[] yueByNian = {0,3,5,7,9,1,3,5,7,9,1};
@@ -87,10 +84,6 @@ public class Configurator {
 	//为h*100+m。子时序号为1，最大为59分，丑时序号为2，最大259分
 	private static int[] HOURNUM = {0,60,300,500,700,900,1100,1300,1500,1700,1900,2100,2300};
 	//由时辰反推12时辰，如0点为序号1即子时，1点为序号2即丑时
-	private static int[] RHOURNUM = {1,2,2,3,3,4,4,5,5,6,6,7,7,8,8,9,9,10,10,11,11,12,12,0};
-	//干支阴阳
-	private static int[] GANYINYANG = {0,1,0,1,0,1,0,1,0,1,0};
-	private static int[] ZIYINYANG =  {0,1,0,1,0,1,0,1,0,1,0,1,0};
 	  
     private static final String[] jiazhi = {
             "JiaZi", "YiChou", "BingYen", "DingMou", "WuChen", "JiSi", "GenWu", "XinWei", "RenShen", "GuiYou",
@@ -101,9 +94,6 @@ public class Configurator {
             "JiaYin", "YiMou", "BingChen", "DingSi", "WuWu", "JiWei", "GenShen", "XinYou", "RenXu", "GuiHai"
         };
     
-    private final static String[] Gan = {"Jia","Yi","Bing","Ding","Wu","Ji","Geng","Xin","Ren","Gui"};
-    private final static String[] Zhi = {"Zi","Chou","Yin","Mao","Chen","Si","Wu","Wei","Shen","You","Xu","Hai"};
-
     //每个节气上元头一天的干支不是甲子或甲午，就是己卯或己酉；
     //中元头一天的干支不是甲申或甲寅，就是己巳乙亥；
     //下元头一天的干支不是甲戌或甲辰，就是己丑或己未。
@@ -116,7 +106,7 @@ public class Configurator {
     //旬0对应： 旬序数xunshu[0]=1,对应旬名为：xunname[1],旬支为xunzi[0],旬干为xungan[0]
     private static final int[] xunshu = {1, 0, 6, 0, 5, 0, 4, 0, 3, 0, 2}; 
     
-    private static final String[] qiDivision = {"early", "middle", "late"}; 
+    private static final String[] qiDivision = {"early", "middle", "late"};
         
 	private static final String dbLocation = "geodb/GeoLite2-City.mmdb";
     
@@ -142,14 +132,6 @@ public class Configurator {
 		return JieQi;
 	}
 
-	public static String[] tianGan() {
-		return tianGan;
-	}
-
-	public static String[] diZhi() {
-		return diZhi;
-	}
-
 	public static int[] solar_1_1() {
 		return solar_1_1;
 	}
@@ -172,14 +154,6 @@ public class Configurator {
 
 	public static String[] jiazhi() {
 		return jiazhi;
-	}
-
-	public static String[] gan() {
-		return Gan;
-	}
-
-	public static String[] zhi() {
-		return Zhi;
 	}
 
 	public static int[][][] sanyuan() {

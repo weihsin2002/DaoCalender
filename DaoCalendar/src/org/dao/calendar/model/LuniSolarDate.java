@@ -2,6 +2,8 @@ package org.dao.calendar.model;
 
 import org.dao.calendar.config.Configurator;
 import org.dao.calendar.utils.Utils;
+import org.dao.core.EarthlyBranches;
+import org.dao.core.HeavenlyStems;
 
 import com.google.gson.JsonObject;
 
@@ -162,7 +164,7 @@ public class LuniSolarDate {
 	}
 	
 	public String lunarYearToGanZhi(int lunarYear){
-		return Configurator.tianGan()[(lunarYear-4) % 10] + Configurator.diZhi()[(lunarYear-4) % 12];
+		return HeavenlyStems.fromOrder((lunarYear-4) % 10) + EarthlyBranches.fromOrder((lunarYear-4) % 12);
 	}
 		
 	public SolarDate LunarToSolar(LuniSolarDate lunar) {
@@ -204,9 +206,9 @@ public class LuniSolarDate {
 		json.addProperty("second", this.sec);
 		json.addProperty("isLeap", this.isleap);
 		if (this.hour == 0 || this.hour == 23) {
-			json.addProperty("shi", Configurator.zhi()[0]);
+			json.addProperty("shi", EarthlyBranches.fromOrder(1));
 		} else {
-			json.addProperty("shi", Configurator.zhi()[(this.hour+1)/2]);
+			json.addProperty("shi", EarthlyBranches.fromOrder((this.hour+1)/2 + 1));
 		}
 		
 		

@@ -7,7 +7,8 @@ import java.util.Date;
 
 import org.apache.log4j.Logger;
 import org.dao.calendar.config.Configurator;
-import org.dao.calendar.utils.Utils;
+import org.dao.core.EarthlyBranches;
+import org.dao.core.HeavenlyStems;
 
 import com.google.gson.JsonObject;
 
@@ -41,15 +42,15 @@ public class FourPillars {
 	  }
 
 	  public FourPillars (String ng, String nz, String yg, String yz, String rg, String rz, String sg, String sz) {
-		  this.ng = Utils.getGanNumber(ng);
-		  this.yg = Utils.getGanNumber(yg);
-		  this.rg = Utils.getGanNumber(rg);
-		  this.sg = Utils.getGanNumber(sg);
+		  this.ng = HeavenlyStems.fromTianGan(ng);
+		  this.yg = HeavenlyStems.fromTianGan(yg);
+		  this.rg = HeavenlyStems.fromTianGan(rg);
+		  this.sg = HeavenlyStems.fromTianGan(sg);
 		  
-		  this.nz = Utils.getZhiNumber(nz);
-		  this.yz = Utils.getZhiNumber(yz);
-		  this.rz = Utils.getZhiNumber(rz);
-		  this.sz = Utils.getZhiNumber(sz);
+		  this.nz = EarthlyBranches.fromDiZhi(nz);
+		  this.yz = EarthlyBranches.fromDiZhi(yz);
+		  this.rz = EarthlyBranches.fromDiZhi(rz);
+		  this.sz = EarthlyBranches.fromDiZhi(sz);
 	  }
 	  
 	  public FourPillars (SolarDate solarDate, LuniSolarDate luniSolarDate) {
@@ -78,7 +79,7 @@ public class FourPillars {
 	        idxm=(idx+1)*2;
 	        if(idxm==10) idxm=0;
 	        //求的月份的干支
-	        m=Configurator.gan()[(idxm+luniSolarDate.month()-1)%10]+Configurator.zhi()[(luniSolarDate.month()+2-1)%12];
+	        m=HeavenlyStems.fromOrder((idxm+luniSolarDate.month()-1)%10 + 1)+ EarthlyBranches.fromOrder((luniSolarDate.month()+2-1)%12 +1);
 	        
 	        //Xulun
 	        bazi[2]=(idxm+luniSolarDate.month()-1)%10;
@@ -123,7 +124,7 @@ public class FourPillars {
 	        }
 	        
 	        //求得时辰的干支   
-	        h=Configurator.gan()[(offset+gHour)%10]+Configurator.zhi()[zHour];
+	        h=HeavenlyStems.fromOrder((offset+gHour)%10+1)+EarthlyBranches.fromOrder(zHour+1);
 	        
 	        //Xulun 
 	        bazi[6]=(offset+gHour)%10;
@@ -137,7 +138,7 @@ public class FourPillars {
 	        	gIndex ++;
 	        	if (gIndex > 9) gIndex = 0; 
 	        	
-		        h=Configurator.gan()[gIndex]+Configurator.zhi()[zHour];
+		        h=HeavenlyStems.fromOrder(gIndex+1)+EarthlyBranches.fromOrder(zHour+1);
 		        bazi[6]=gIndex;
 	        }
 	        
@@ -186,18 +187,18 @@ public class FourPillars {
 	}
 	
 	public String toString () {
-		return "Year GanZhi = " + Configurator.tianGan()[ng] +  Configurator.diZhi()[nz] + 
-			   " Month GanZhi = " + Configurator.tianGan()[yg] + Configurator.diZhi()[yz] + 
-			   " Day GanZhi = " + Configurator.tianGan()[rg] + Configurator.diZhi()[rz] + 
-			   " Hour GanZhi = " + Configurator.tianGan()[sg] + Configurator.diZhi()[sz];
+		return "Year GanZhi = " + HeavenlyStems.fromOrder(ng) +  EarthlyBranches.fromOrder(nz) + 
+			   " Month GanZhi = " + HeavenlyStems.fromOrder(yg) + EarthlyBranches.fromOrder(yz) + 
+			   " Day GanZhi = " + HeavenlyStems.fromOrder(rg) + EarthlyBranches.fromOrder(rz) + 
+			   " Hour GanZhi = " + HeavenlyStems.fromOrder(sg) + EarthlyBranches.fromOrder(sz);
 	}
 	
 	public JsonObject toJson () {
 		JsonObject json = new JsonObject();
-		json.addProperty("YearGanZhi", Configurator.tianGan()[ng] +  Configurator.diZhi()[nz]);
-		json.addProperty("MonthGznZhi", Configurator.tianGan()[yg] + Configurator.diZhi()[yz]);
-		json.addProperty("DayGanZhi", Configurator.tianGan()[rg] + Configurator.diZhi()[rz]);
-		json.addProperty("HourGanZhi", Configurator.tianGan()[sg] + Configurator.diZhi()[sz]);
+		json.addProperty("YearGanZhi", HeavenlyStems.fromOrder(ng) +  EarthlyBranches.fromOrder(nz));
+		json.addProperty("MonthGznZhi", HeavenlyStems.fromOrder(yg) + EarthlyBranches.fromOrder(yz));
+		json.addProperty("DayGanZhi", HeavenlyStems.fromOrder(rg) + EarthlyBranches.fromOrder(rz));
+		json.addProperty("HourGanZhi", HeavenlyStems.fromOrder(sg) + EarthlyBranches.fromOrder(sz));
 		
 		JsonObject indexJson = new JsonObject();
 		indexJson.addProperty("ng", ng);

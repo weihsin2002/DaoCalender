@@ -78,27 +78,7 @@ public class Utils {
 		
 		return (new SolarDate (solarDate.year(), solarDate.month(), solarDate.day(), h, min, sec));
 	}
-
-	  public static int getGanNumber (String tianGang) {
-		  for (int i=0; i<10; i++) {
-			  if (tianGang.equalsIgnoreCase(Configurator.tianGan()[i])) {
-				  return i;
-			  }
-		  }
-		  
-		  return -1;
-	  }
-	  
-	  public static int getZhiNumber (String diZhi) {
-		  for (int i=0; i<12; i++) {
-			  if (diZhi.equalsIgnoreCase(Configurator.diZhi()[i])) {
-				  return i;
-			  }
-		  }
-		  
-		  return -1;		  
-	  }
-	  
+	  	  
 	  public static Date calTrueSolarTime (Date date) {
 		  ZonedDateTime t = ZonedDateTime.now();
 			
@@ -138,7 +118,7 @@ public class Utils {
 	 		
 		  SolarCalculations solarCalculations = new  SolarCalculations(latitude, longitude, t.getZone().getRules().isDaylightSavings(t.toInstant()));
 			
-		  SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
+		  SimpleDateFormat sdf;
 			
 		  Calendar cal = Calendar.getInstance();;
 		  cal.setTime(date);
@@ -147,8 +127,12 @@ public class Utils {
 			
 		  try {			
 			  minutes = solarCalculations.calcTrueSolarTime(cal);
+			  
+			  logger.info("adj=" + minutes);
 
 			  sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+			  
+			  logger.info("Year=" + Calendar.getInstance().get(Calendar.YEAR));
 
 			  date = sdf.parse(Calendar.getInstance().get(Calendar.YEAR) + "-" + Calendar.getInstance().get(Calendar.MONTH)+1 + "-" + Calendar.getInstance().get(Calendar.DAY_OF_MONTH) + " 00:00");
 			} catch (Exception e) {

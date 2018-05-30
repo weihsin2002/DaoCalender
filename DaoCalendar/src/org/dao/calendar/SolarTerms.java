@@ -727,7 +727,7 @@ public class SolarTerms {
 //	    syn[i] += "小"; // 标记大小月  
 	  }  
 	  // 显示  
-	  String out = "节气    手表时		   中气    手表时            	        农历月   朔的手表时" + System.lineSeparator();  
+	  String out = "JieQi    Watch Time		   ChungQi    Watch Time            	        Lunar MOnth   Shuo Watch Time" + System.lineSeparator();  
 	  for (i = 0; i < tot; i++) {  
 	   int zm = (i * 2 + 18) % 24;  
 	   int jm = (i * 2 + 17) % 24; // 中气名节气名  

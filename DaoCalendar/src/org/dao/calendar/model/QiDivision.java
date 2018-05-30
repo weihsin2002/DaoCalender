@@ -3,6 +3,8 @@ package org.dao.calendar.model;
 import org.apache.log4j.Logger;
 import org.dao.calendar.config.Configurator;
 import org.dao.calendar.test.Test;
+import org.dao.core.EarthlyBranches;
+import org.dao.core.HeavenlyStems;
 
 import com.google.gson.JsonObject;
 
@@ -55,7 +57,7 @@ public class QiDivision {
 	      }
 	    }
 
-	    this.stemLead = Configurator.tianGan()[futou[1]]+ Configurator.diZhi()[futou[2]];
+	    this.stemLead = HeavenlyStems.fromOrder(futou[1])+ EarthlyBranches.fromOrder(futou[2]);
 	    this.days = futou[0]+1;
 	    		
 	    getYuan(futou[3]);
