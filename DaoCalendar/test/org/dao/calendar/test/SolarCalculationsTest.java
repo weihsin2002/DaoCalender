@@ -74,12 +74,18 @@ public class SolarCalculationsTest {
 		
 		double minutes = solarCalculations.calcTrueSolarTime(cal);
 		
+		logger.info("minutes=" + minutes);
+		logger.info("adjusted minutes=" + String.valueOf(minutes*60));
+		long seconds = (long) minutes*60;
+		logger.info("seconds=" + seconds);
+
+		
 		Date date = new Date ();
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
 		
 		try {
-			date = sdf.parse("2018-05-24-00-00-00");
+			date = sdf.parse("2018-05-29-00-00-00");
 		} catch (ParseException e) {
 			logger.error("Erro parsing date", e);
 		}

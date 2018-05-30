@@ -196,7 +196,7 @@ public class FourPillars {
 	public JsonObject toJson () {
 		JsonObject json = new JsonObject();
 		json.addProperty("YearGanZhi", HeavenlyStems.fromOrder(ng) +  EarthlyBranches.fromOrder(nz));
-		json.addProperty("MonthGznZhi", HeavenlyStems.fromOrder(yg) + EarthlyBranches.fromOrder(yz));
+		json.addProperty("MonthGanZhi", HeavenlyStems.fromOrder(yg) + EarthlyBranches.fromOrder(yz));
 		json.addProperty("DayGanZhi", HeavenlyStems.fromOrder(rg) + EarthlyBranches.fromOrder(rz));
 		json.addProperty("HourGanZhi", HeavenlyStems.fromOrder(sg) + EarthlyBranches.fromOrder(sz));
 		

@@ -128,13 +128,9 @@ public class Utils {
 		  try {			
 			  minutes = solarCalculations.calcTrueSolarTime(cal);
 			  
-			  logger.info("adj=" + minutes);
-
-			  sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+			  sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			  
-			  logger.info("Year=" + Calendar.getInstance().get(Calendar.YEAR));
-
-			  date = sdf.parse(Calendar.getInstance().get(Calendar.YEAR) + "-" + Calendar.getInstance().get(Calendar.MONTH)+1 + "-" + Calendar.getInstance().get(Calendar.DAY_OF_MONTH) + " 00:00");
+			  date = sdf.parse(Calendar.getInstance().get(Calendar.YEAR) + "-" + (Calendar.getInstance().get(Calendar.MONTH)+1) + "-" + Calendar.getInstance().get(Calendar.DAY_OF_MONTH) + " 00:00:00");
 			} catch (Exception e) {
 				logger.error("Erro getting today's date", e);
 				return null;
