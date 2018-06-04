@@ -727,7 +727,7 @@ public class SolarTerms {
 //	    syn[i] += "小"; // 标记大小月  
 	  }  
 	  // 显示  
-	  String out = "JieQi    Watch Time		   ChungQi    Watch Time            	        Lunar MOnth   Shuo Watch Time" + System.lineSeparator();  
+	  String out = "JieQi    Watch Time		   ChungQi    Watch Time            	        Lunar Month   Shuo Watch Time" + System.lineSeparator();  
 	  for (i = 0; i < tot; i++) {  
 	   int zm = (i * 2 + 18) % 24;  
 	   int jm = (i * 2 + 17) % 24; // 中气名节气名  

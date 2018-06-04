@@ -60,21 +60,12 @@ public class QiDivision {
 	    this.stemLead = HeavenlyStems.fromOrder(futou[1])+ EarthlyBranches.fromOrder(futou[2]);
 	    this.days = futou[0]+1;
 	    		
-	    getYuan(futou[3]);
+	    this.division = Division.fromOrder(futou[3]);
 	  }
 	
 	  private int getXunShu(int sg, int sz) {
 		    return Configurator.xunshu()[(sz-sg+120)%12];
 		  }
-
-	  private void getYuan(int i) {
-		  if(i==1)
-			  this.division = "early";
-		  else if(i==2)
-			  this.division = "middle";
-		  else if(i==3)
-			  this.division = "late";
-	  }
 	
 	public String stemLead() {
 		return stemLead;

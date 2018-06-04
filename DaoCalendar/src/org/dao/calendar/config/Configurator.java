@@ -1,6 +1,8 @@
 package org.dao.calendar.config;
 
 import org.apache.log4j.Logger;
+import org.dao.calendar.model.JieQi;
+import org.dao.calendar.model.LunarMonth;
 
 public class Configurator {
 	private static final Logger logger = Logger.getLogger(Configurator.class);
@@ -71,11 +73,13 @@ public class Configurator {
 			0x107638, 0x10784c, 0x107a3f, 0x107c53, 0x107e48 };
 
 	
-	private static String JieQi[] = {  
-			   "Spring Equinox","Pure Brightness","Grain Rain","Start of Summer","Grain Full","Grain in Ear","Summer Solstice","Slight Heat","Great Heat","Start of Autumn","The End of Heat","White Dew",  
-			   "Autumn Equinox","Cold Dew","Frost Descent","Start of Winter","Light Snow","Heavy Snow","Winter Solstice","Lesser Cold","Greater Cold","Start of Spring","Rain Water","Insects Awaken"};  
+	private static String jieQi[] = {  
+			   JieQi.SPRING_EQUINOX.jieQi(),JieQi.PURE_BRIGHTNESS.jieQi(),JieQi.GRAIN_RAIN.jieQi(),JieQi.START_OF_SUMMER.jieQi(),JieQi.GRAIN_FULL.jieQi(),JieQi.GRAIN_IN_EAR.jieQi(),JieQi.SUMMER_SOLSTICE.jieQi(),JieQi.SLIGHT_HEAT.jieQi(),JieQi.GREAT_HEAT.jieQi(),
+			   JieQi.START_OF_AUTUMN.jieQi(),JieQi.THE_END_OF_HEAT.jieQi(),JieQi.WHITE_DEW.jieQi(), JieQi.AUTUMN_EQUINOX.jieQi(),JieQi.COLD_DEW.jieQi(),JieQi.FROST_DESCENT.jieQi(),JieQi.START_OF_WINTER.jieQi(),JieQi.LIGHT_SNOW.jieQi(),JieQi.HEAVY_SNOW.jieQi(),
+			   JieQi.WINTER_SOLSTICE.jieQi(),JieQi.LESSER_COLD.jieQi(),JieQi.GREATER_COLD.jieQi(),JieQi.START_OF_SPRING.jieQi(),JieQi.RAIN_WATER.jieQi(),JieQi.INSECTS_AWAKEN.jieQi()};  
 		
-	private static String lunarMonth[] = { "First Lunar Month", "Second Lunar Month", "Third Lunar Month", "Fourth Lunar Month", "Fifth Lunar Month", "Sixth Lunar Month", "Seventh Lunar Month", "Eighth Lunar Month", "Ninth Lunar Month", "Tenth Lunar Month", "Eleventh Lunar Month", "Twelfth Lunar Month" };
+	private static String lunarMonth[] = { LunarMonth.FIRST_LUNAR_MONTH.lunarMonth(), LunarMonth.SECOND_LUNAR_MONTH.lunarMonth(), LunarMonth.THIRD_LUNAR_MONTH.lunarMonth(), LunarMonth.FOURTH_LUNAR_MONTH.lunarMonth(), LunarMonth.FIFTH_LUNAR_MONTH.lunarMonth(), LunarMonth.SIXTH_LUNAR_MONTH.lunarMonth(), 
+										   LunarMonth.SEVENTH_LUNAR_MONTH.lunarMonth(), LunarMonth.EIGHTH_LUNAR_MONTH.lunarMonth(), LunarMonth.NINTH_LUNAR_MONTH.lunarMonth(), LunarMonth.TENTH_LUNAR_MONTH.lunarMonth(), LunarMonth.ELEVENTH_LUNAR_MONTH.lunarMonth(), LunarMonth.TWELFTH_LUNAR_MONTH.lunarMonth() };
 	
 	private static int[] yueByNian = {0,3,5,7,9,1,3,5,7,9,1};
 	private static int[] shiByRi =   {0,1,3,5,7,9,1,3,5,7,9};
@@ -105,9 +109,7 @@ public class Configurator {
     //60甲子共分6旬，每旬分别对应数字：0甲子，10甲戌，8甲申，6甲午，4甲辰，2甲寅  此数即（旬支-旬干+12）%12
     //旬0对应： 旬序数xunshu[0]=1,对应旬名为：xunname[1],旬支为xunzi[0],旬干为xungan[0]
     private static final int[] xunshu = {1, 0, 6, 0, 5, 0, 4, 0, 3, 0, 2}; 
-    
-    private static final String[] qiDivision = {"early", "middle", "late"};
-        
+            
 	private static final String dbLocation = "geodb/GeoLite2-City.mmdb";
     
 	static {
@@ -129,7 +131,7 @@ public class Configurator {
 	}
 
 	public static String[] jieQi() {
-		return JieQi;
+		return jieQi;
 	}
 
 	public static int[] solar_1_1() {
@@ -170,9 +172,5 @@ public class Configurator {
 
 	public static String dblocation() {
 		return dbLocation;
-	}
-	
-	public static String[] qiDivision () {
-		return qiDivision;
-	}
+	}	
 }
